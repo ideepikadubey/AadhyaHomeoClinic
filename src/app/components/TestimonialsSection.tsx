@@ -57,10 +57,10 @@ const avatarColors = [
 
 export function TestimonialsSection() {
   return (
-    <section className="py-24 bg-secondary">
+    <section className="pt-6 pb-16 sm:pt-8 sm:pb-20 bg-secondary">
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
-        <div className="text-center mb-14">
+        <div className="text-center mb-10 sm:mb-12">
           <div
             className="text-accent mb-3 tracking-widest uppercase"
             style={{ fontFamily: "'Inter', sans-serif", fontSize: "12px", fontWeight: 500 }}

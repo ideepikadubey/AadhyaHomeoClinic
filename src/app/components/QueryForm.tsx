@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Send, CheckCircle2, MapPin, Phone, Clock, Mail, Navigation } from "lucide-react";
+import whatsappIcon from "@/assets/whatsapp.png";
 
 export function QueryForm() {
   const [form, setForm] = useState({
@@ -8,46 +9,55 @@ export function QueryForm() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    if (errorMessage) setErrorMessage(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setErrorMessage(null);
 
-    const message = [
-      `*New Consultation Query*`,
-      ``,
-      `*Name:* ${form.name}`,
-      `*Phone:* ${form.phone}`,
-      form.email ? `*Email:* ${form.email}` : "",
-      form.age ? `*Age:* ${form.age}` : "",
-      `*Condition:* ${form.condition}`,
-      ``,
-      `*Message:*`,
-      form.message,
-    ].filter(Boolean).join("\n");
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/aadhyahomoeoclinic11@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          Name: form.name,
+          Phone: form.phone,
+          Email: form.email || "Not provided",
+          Age: form.age || "Not specified",
+          Condition: form.condition,
+          Message: form.message,
+          _subject: `New Consultation Query: ${form.name} (${form.condition})`,
+          _template: "table",
+          _captcha: "false",
+        }),
+      });
 
-    // Open WhatsApp with pre-filled message
-    const whatsappUrl = `https://wa.me/917572946732?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, "_blank");
+      if (!response.ok) {
+        throw new Error("Failed to send query. Please try again.");
+      }
 
-    // Also trigger mailto for email
-    const emailSubject = `Consultation Query – ${form.name} – ${form.condition}`;
-    const emailBody = message.replace(/\*/g, "");
-    const mailtoUrl = `mailto:aadhyahomoeoclinic11@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-    setTimeout(() => {
-      window.location.href = mailtoUrl;
-    }, 500);
-
-    setLoading(false);
-    setSubmitted(true);
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Form submission error:", err);
+      // Fallback: trigger direct mailto/WhatsApp if network fails
+      setErrorMessage("Something went wrong sending the form. Please try WhatsApp or call us directly.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const contactDetails = [
     { icon: <MapPin className="w-5 h-5" />, label: "Address", value: "Ojas Hospital, opp dinosaur circle, near Rakhiyal char rasta, Rakhiyal, Ahmedabad, Gujarat, 380021" },
-    { icon: <Phone className="w-5 h-5" />, label: "Phone", value: "+91 75729 46732" },
+    { icon: <img src={whatsappIcon} alt="WhatsApp" className="w-5 h-5 object-contain" />, label: "WhatsApp & Call", value: "+91 75729 46732" },
     { icon: <Mail className="w-5 h-5" />, label: "Email", value: "aadhyahomoeoclinic11@gmail.com" },
     { icon: <Clock className="w-5 h-5" />, label: "Hours", value: "Mon – Sat: 10:00 AM – 7:00 PM" },
   ];
@@ -58,10 +68,9 @@ export function QueryForm() {
     "Thyroid Issues", "Other",
   ];
 
-  // Google Maps embed URL using the Place ID
-  const placeId = import.meta.env.VITE_GOOGLE_PLACE_ID || "ChIJMV2ALk6HXjkRQYaM4Ixj_po";
-  const mapEmbedUrl = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3671.5!2d72.6!3d23.0!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s=${placeId}!2sAadhya%20Homoeo%20Clinic!5e0!3m2!1sen!2sin!4v1`;
-  const mapSearchUrl = `https://www.google.com/maps/embed/v1/place?key=${import.meta.env.VITE_GOOGLE_PLACES_API_KEY || ""}&q=Aadhya+Homoeo+Clinic,Rakhiyal,Ahmedabad&zoom=16`;
+  // Standard Google Maps Embed URL that works reliably without API key restrictions
+  const mapEmbedUrl = `https://maps.google.com/maps?q=Ojas+Hospital,+opp+dinosaur+circle,+Rakhiyal,+Ahmedabad,+Gujarat+380021&t=&z=16&ie=UTF8&iwloc=&output=embed`;
+  const directionsUrl = `https://www.google.com/maps/search/?api=1&query=Ojas+Hospital+opp+dinosaur+circle+Rakhiyal+Ahmedabad+Gujarat+380021`;
 
   return (
     <section id="contact" className="py-24 bg-background">
@@ -133,7 +142,7 @@ export function QueryForm() {
             {/* Google Map Embed */}
             <div className="rounded-2xl overflow-hidden border border-foreground/8 shadow-sm">
               <iframe
-                src={mapSearchUrl}
+                src={mapEmbedUrl}
                 width="100%"
                 height="260"
                 style={{ border: 0 }}
@@ -143,7 +152,7 @@ export function QueryForm() {
                 title="Aadhya Homoeo Clinic Location"
               />
               <a
-                href={`https://www.google.com/maps/search/Aadhya+Homoeo+Clinic+Rakhiyal+Ahmedabad`}
+                href={directionsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 bg-white py-3 text-primary hover:bg-secondary transition-colors"
@@ -162,19 +171,29 @@ export function QueryForm() {
               >
                 Follow for Health Tips
               </div>
-              <div className="flex gap-3">
+              <div className="flex flex-wrap gap-2.5">
+                <a
+                  href="https://wa.me/917572946732"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-3.5 py-2 rounded-full border border-foreground/10 hover:bg-secondary transition-colors text-foreground"
+                  style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px" }}
+                >
+                  <img src={whatsappIcon} alt="WhatsApp" className="w-4 h-4 object-contain" />
+                  WhatsApp
+                </a>
                 <a
                   href="https://www.instagram.com/dr_mayurs_aadhya_homeo"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-4 py-2 rounded-full border border-foreground/10 hover:bg-secondary transition-colors text-foreground"
+                  className="flex items-center gap-2 px-3.5 py-2 rounded-full border border-foreground/10 hover:bg-secondary transition-colors text-foreground"
                   style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px" }}
                 >
                   📷 Instagram
                 </a>
                 <a
                   href="mailto:aadhyahomoeoclinic11@gmail.com"
-                  className="flex items-center gap-2 px-4 py-2 rounded-full border border-foreground/10 hover:bg-secondary transition-colors text-foreground"
+                  className="flex items-center gap-2 px-3.5 py-2 rounded-full border border-foreground/10 hover:bg-secondary transition-colors text-foreground"
                   style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px" }}
                 >
                   ✉️ Email Us
@@ -200,13 +219,25 @@ export function QueryForm() {
                 >
                   Thank you for reaching out. Dr. Mishra's team will contact you within 24 hours to schedule your consultation.
                 </p>
-                <button
-                  onClick={() => { setSubmitted(false); setForm({ name: "", phone: "", email: "", age: "", condition: "", message: "" }); }}
-                  className="mt-6 text-primary border border-primary/30 px-5 py-2 rounded-full hover:bg-primary/5 transition-colors cursor-pointer"
-                  style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px" }}
-                >
-                  Submit another query
-                </button>
+                <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
+                  <a
+                    href="https://wa.me/917572946732"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-[#25D366] text-white px-5 py-2.5 rounded-full hover:bg-[#20bd5a] transition-colors"
+                    style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px", fontWeight: 500 }}
+                  >
+                    <img src={whatsappIcon} alt="WhatsApp" className="w-4 h-4 object-contain" />
+                    Chat on WhatsApp
+                  </a>
+                  <button
+                    onClick={() => { setSubmitted(false); setForm({ name: "", phone: "", email: "", age: "", condition: "", message: "" }); }}
+                    className="text-primary border border-primary/30 px-5 py-2.5 rounded-full hover:bg-primary/5 transition-colors cursor-pointer"
+                    style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px" }}
+                  >
+                    Submit another query
+                  </button>
+                </div>
               </div>
             ) : (
               <form
@@ -350,6 +381,12 @@ export function QueryForm() {
                   />
                 </div>
 
+                {errorMessage && (
+                  <div className="p-3.5 bg-destructive/10 border border-destructive/20 rounded-xl text-destructive text-sm font-medium text-center">
+                    {errorMessage}
+                  </div>
+                )}
+
                 <button
                   type="submit"
                   disabled={loading}
@@ -359,12 +396,12 @@ export function QueryForm() {
                   {loading ? (
                     <span className="flex items-center gap-2">
                       <span className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-                      Sending...
+                      Submitting Query...
                     </span>
                   ) : (
                     <>
                       <Send className="w-4 h-4" />
-                      Send Query & Book Appointment
+                      Submit Consultation Query
                     </>
                   )}
                 </button>

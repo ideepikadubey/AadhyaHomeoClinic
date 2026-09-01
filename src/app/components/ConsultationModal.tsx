@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { X, Send, CheckCircle2, MessageCircle, Mail } from "lucide-react";
+import { X, Send, CheckCircle2, Mail } from "lucide-react";
 import clinicLogo from "@/assets/logo.jpg";
+import whatsappIcon from "@/assets/whatsapp.png";
 
 interface ConsultationModalProps {
   isOpen: boolean;
@@ -36,33 +37,49 @@ export function ConsultationModal({ isOpen, onClose }: ConsultationModalProps) {
   });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    if (errorMessage) setErrorMessage(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setErrorMessage(null);
 
-    const message = buildMessage(form);
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/aadhyahomoeoclinic11@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          Name: form.name,
+          Phone: form.phone,
+          Email: form.email || "Not provided",
+          Age: form.age || "Not specified",
+          Condition: form.condition,
+          Message: form.message,
+          _subject: `New Consultation Query: ${form.name} (${form.condition})`,
+          _template: "table",
+          _captcha: "false",
+        }),
+      });
 
-    // Open WhatsApp with pre-filled message
-    const whatsappUrl = `https://wa.me/917572946732?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, "_blank");
+      if (!response.ok) {
+        throw new Error("Failed to send query. Please try again.");
+      }
 
-    // Also trigger mailto for email
-    const emailSubject = `Consultation Query – ${form.name} – ${form.condition}`;
-    const emailBody = message.replace(/\*/g, ""); // Remove markdown bold for email
-    const mailtoUrl = `mailto:aadhyahomoeoclinic11@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-
-    // Use a small delay so WhatsApp opens first, then trigger email
-    setTimeout(() => {
-      window.location.href = mailtoUrl;
-    }, 500);
-
-    setLoading(false);
-    setSubmitted(true);
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Modal form submission error:", err);
+      setErrorMessage("Something went wrong. Please try WhatsApp or call directly.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleClose = () => {
@@ -143,7 +160,7 @@ export function ConsultationModal({ isOpen, onClose }: ConsultationModalProps) {
                   className="flex items-center gap-2 bg-[#25D366] text-white px-5 py-2.5 rounded-full hover:bg-[#20bd5a] transition-colors"
                   style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px", fontWeight: 500 }}
                 >
-                  <MessageCircle className="w-4 h-4" />
+                  <img src={whatsappIcon} alt="WhatsApp" className="w-4 h-4 object-contain" />
                   Open WhatsApp
                 </a>
                 <button
@@ -294,25 +311,31 @@ export function ConsultationModal({ isOpen, onClose }: ConsultationModalProps) {
                 />
               </div>
 
-              {/* Submit */}
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-primary text-primary-foreground py-3.5 rounded-xl hover:bg-primary/90 transition-all flex items-center justify-center gap-2 disabled:opacity-70 hover:shadow-lg hover:shadow-primary/15 cursor-pointer"
-                style={{ fontFamily: "'Inter', sans-serif", fontSize: "15px", fontWeight: 500 }}
-              >
-                {loading ? (
-                  <span className="flex items-center gap-2">
-                    <span className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-                    Sending...
-                  </span>
-                ) : (
-                  <>
-                    <Send className="w-4 h-4" />
-                    Send via WhatsApp & Email
-                  </>
+                {errorMessage && (
+                  <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-xl text-destructive text-xs font-medium text-center">
+                    {errorMessage}
+                  </div>
                 )}
-              </button>
+
+                {/* Submit */}
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-primary text-primary-foreground py-3.5 rounded-xl hover:bg-primary/90 transition-all flex items-center justify-center gap-2 disabled:opacity-70 hover:shadow-lg hover:shadow-primary/15 cursor-pointer"
+                  style={{ fontFamily: "'Inter', sans-serif", fontSize: "15px", fontWeight: 500 }}
+                >
+                  {loading ? (
+                    <span className="flex items-center gap-2">
+                      <span className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+                      Submitting Query...
+                    </span>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      Submit Consultation Query
+                    </>
+                  )}
+                </button>
 
               {/* Direct WhatsApp link */}
               <div className="text-center">
@@ -323,7 +346,7 @@ export function ConsultationModal({ isOpen, onClose }: ConsultationModalProps) {
                   className="inline-flex items-center gap-2 text-muted-foreground hover:text-[#25D366] transition-colors"
                   style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px" }}
                 >
-                  <MessageCircle className="w-4 h-4" />
+                  <img src={whatsappIcon} alt="WhatsApp" className="w-4 h-4 object-contain" />
                   Or message us directly on WhatsApp
                 </a>
               </div>

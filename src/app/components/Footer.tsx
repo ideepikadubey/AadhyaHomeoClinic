@@ -1,5 +1,6 @@
 import { Instagram, Mail, Phone, MapPin, ExternalLink } from "lucide-react";
 import clinicLogo from "@/assets/logo.jpg";
+import whatsappIcon from "@/assets/whatsapp.png";
 
 interface FooterProps {
   onOpenConsultation: () => void;
@@ -11,6 +12,7 @@ export function Footer({ onOpenConsultation }: FooterProps) {
     { label: "About Dr. Mishra", href: "#about" },
     { label: "Diseases Treated", href: "#diseases" },
     { label: "Patient Guidelines", href: "#guidelines" },
+    { label: "FAQs", href: "#faqs" },
     { label: "Instagram Updates", href: "#updates" },
     { label: "Book Appointment", href: "#contact" },
   ];
@@ -25,7 +27,7 @@ export function Footer({ onOpenConsultation }: FooterProps) {
   ];
 
   return (
-    <footer style={{ background: "var(--foreground)" }}>
+    <footer style={{ background: "#000000" }}>
       {/* Top CTA band */}
       <div
         className="border-b"
@@ -89,6 +91,15 @@ export function Footer({ onOpenConsultation }: FooterProps) {
             health starts here.
           </p>
           <div className="flex gap-3">
+            <a
+              href="https://wa.me/917572946732"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-primary-foreground/60 hover:text-primary-foreground hover:border-white/30 transition-colors p-2"
+              aria-label="WhatsApp"
+            >
+              <img src={whatsappIcon} alt="WhatsApp" className="w-full h-full object-contain" />
+            </a>
             <a
               href="https://www.instagram.com/dr_mayurs_aadhya_homeo"
               target="_blank"
@@ -179,6 +190,18 @@ export function Footer({ onOpenConsultation }: FooterProps) {
                 Ojas Hospital, opp dinosaur circle,<br />near Rakhiyal char rasta, Rakhiyal,<br />Ahmedabad, Gujarat 380021
               </span>
             </div>
+            <div className="flex gap-3 items-center">
+              <img src={whatsappIcon} alt="WhatsApp" className="w-4 h-4 object-contain flex-shrink-0" />
+              <a
+                href="https://wa.me/917572946732"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary-foreground/60 hover:text-primary-foreground/90 transition-colors"
+                style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px" }}
+              >
+                +91 75729 46732 (WhatsApp)
+              </a>
+            </div>
             <div className="flex gap-3">
               <Phone className="w-4 h-4 text-accent flex-shrink-0" />
               <a
@@ -186,7 +209,7 @@ export function Footer({ onOpenConsultation }: FooterProps) {
                 className="text-primary-foreground/60 hover:text-primary-foreground/90 transition-colors"
                 style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px" }}
               >
-                +91 75729 46732
+                +91 75729 46732 (Direct Call)
               </a>
             </div>
             <div className="flex gap-3">

@@ -22,6 +22,7 @@ export function Navbar({ onOpenConsultation }: NavbarProps) {
     { label: "Diseases", href: "#diseases" },
     { label: "Guidelines", href: "#guidelines" },
     { label: "Reviews", href: "#reviews" },
+    { label: "FAQs", href: "#faqs" },
     { label: "Updates", href: "#updates" },
     { label: "Contact", href: "#contact" },
   ];

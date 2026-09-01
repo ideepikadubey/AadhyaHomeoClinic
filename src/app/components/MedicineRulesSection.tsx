@@ -76,10 +76,10 @@ const rules = [
 
 export function MedicineRulesSection() {
   return (
-    <section id="guidelines" className="py-24 bg-secondary">
+    <section id="guidelines" className="pt-16 pb-10 sm:pt-20 sm:pb-12 bg-secondary">
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
-        <div className="text-center mb-14">
+        <div className="text-center mb-10 sm:mb-12">
           <div
             className="text-accent mb-3 tracking-widest uppercase"
             style={{ fontFamily: "'Inter', sans-serif", fontSize: "12px", fontWeight: 500 }}
@@ -141,7 +141,7 @@ export function MedicineRulesSection() {
         </div>
 
         {/* Note block */}
-        <div className="mt-12 bg-card/60 backdrop-blur rounded-2xl p-6 border border-accent/20 max-w-2xl mx-auto text-center">
+        <div className="mt-8 bg-card/60 backdrop-blur rounded-2xl p-5 border border-accent/20 max-w-2xl mx-auto text-center">
           <p
             className="text-foreground"
             style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px", fontWeight: 500 }}
