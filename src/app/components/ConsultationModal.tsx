@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { X, Send, CheckCircle2, Mail } from "lucide-react";
-import clinicLogo from "@/assets/logo.jpg";
-import whatsappIcon from "@/assets/whatsapp.png";
+import { X, Send, CheckCircle2, MessageCircle } from "lucide-react";
+import clinicLogo from "@/assets/HomeoLogoCropped.png";
 
 interface ConsultationModalProps {
   isOpen: boolean;
@@ -95,7 +94,7 @@ export function ConsultationModal({ isOpen, onClose }: ConsultationModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4"
       onClick={handleClose}
     >
       {/* Backdrop */}
@@ -103,77 +102,79 @@ export function ConsultationModal({ isOpen, onClose }: ConsultationModalProps) {
 
       {/* Modal */}
       <div
-        className="relative bg-white rounded-3xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto animate-slide-up"
+        className="relative bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto animate-slide-up"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 w-8 h-8 rounded-full bg-foreground/5 hover:bg-foreground/10 flex items-center justify-center transition-colors z-10 cursor-pointer"
+          className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 w-8 h-8 rounded-full bg-foreground/5 hover:bg-foreground/10 flex items-center justify-center transition-colors z-10 cursor-pointer"
           aria-label="Close"
         >
           <X className="w-4 h-4 text-foreground" />
         </button>
 
         {/* Logo header */}
-        <div className="flex flex-col items-center pt-8 pb-4 px-8 border-b border-foreground/8">
-          <img
-            src={clinicLogo}
-            alt="Aadhya Homoeo Clinic"
-            className="w-20 h-20 rounded-full object-cover shadow-lg mb-3"
-          />
+        <div className="flex flex-col items-center pt-6 sm:pt-8 pb-3 sm:pb-4 px-6 sm:px-8 border-b border-foreground/8">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white p-2 shadow-sm border border-foreground/10 flex items-center justify-center mb-2 sm:mb-3">
+            <img
+              src={clinicLogo}
+              alt="Aadhya Homoeo Clinic"
+              className="w-full h-full object-contain"
+            />
+          </div>
           <h3
-            className="text-foreground text-center"
-            style={{ fontFamily: "'Playfair Display', serif", fontSize: "20px", fontWeight: 700 }}
+            className="text-foreground text-center font-bold text-lg sm:text-xl"
+            style={{ fontFamily: "'Playfair Display', serif" }}
           >
             Book a Consultation
           </h3>
           <p
-            className="text-muted-foreground text-center mt-1"
-            style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px" }}
+            className="text-muted-foreground text-center mt-0.5 text-xs sm:text-sm"
+            style={{ fontFamily: "'Inter', sans-serif" }}
           >
             Fill in your details — we'll connect via WhatsApp & Email
           </p>
         </div>
 
-        <div className="p-6 sm:p-8">
+        <div className="p-4 sm:p-8">
           {submitted ? (
-            <div className="flex flex-col items-center justify-center text-center py-8">
-              <CheckCircle2 className="w-14 h-14 text-primary mb-4" />
+            <div className="flex flex-col items-center justify-center text-center py-6 sm:py-8">
+              <CheckCircle2 className="w-12 h-12 sm:w-14 sm:h-14 text-primary mb-3 sm:mb-4" />
               <h3
-                className="text-foreground mb-2"
-                style={{ fontFamily: "'Playfair Display', serif", fontSize: "22px", fontWeight: 600 }}
+                className="text-foreground mb-2 font-bold text-xl sm:text-2xl"
+                style={{ fontFamily: "'Playfair Display', serif" }}
               >
                 Query Sent!
               </h3>
               <p
-                className="text-muted-foreground max-w-sm mb-6"
-                style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px", lineHeight: 1.7 }}
+                className="text-muted-foreground max-w-sm mb-6 text-xs sm:text-sm leading-relaxed"
+                style={{ fontFamily: "'Inter', sans-serif" }}
               >
                 Your consultation query has been sent via WhatsApp and Email. Dr. Mishra's team will respond shortly.
               </p>
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 w-full sm:w-auto">
                 <a
                   href="https://wa.me/917572946732"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 bg-[#25D366] text-white px-5 py-2.5 rounded-full hover:bg-[#20bd5a] transition-colors"
-                  style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px", fontWeight: 500 }}
+                  className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white px-5 py-2.5 rounded-full hover:bg-[#20bd5a] transition-colors text-xs sm:text-sm font-semibold w-full sm:w-auto"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
                 >
-                  <img src={whatsappIcon} alt="WhatsApp" className="w-4 h-4 object-contain" />
+                  <MessageCircle className="w-4 h-4" />
                   Open WhatsApp
                 </a>
                 <button
                   onClick={handleClose}
-                  className="text-muted-foreground border border-foreground/10 px-5 py-2.5 rounded-full hover:bg-secondary transition-colors cursor-pointer"
-                  style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px" }}
+                  className="text-muted-foreground border border-foreground/10 px-5 py-2.5 rounded-full hover:bg-secondary transition-colors cursor-pointer text-xs sm:text-sm font-semibold w-full sm:w-auto"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
                 >
                   Close
                 </button>
               </div>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-3.5 sm:space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 {/* Name */}
                 <div className="col-span-2 sm:col-span-1">
@@ -343,10 +344,10 @@ export function ConsultationModal({ isOpen, onClose }: ConsultationModalProps) {
                   href="https://wa.me/917572946732"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-muted-foreground hover:text-[#25D366] transition-colors"
-                  style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px" }}
+                  className="inline-flex items-center gap-2 text-muted-foreground hover:text-[#25D366] transition-colors text-xs sm:text-sm font-medium"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
                 >
-                  <img src={whatsappIcon} alt="WhatsApp" className="w-4 h-4 object-contain" />
+                  <MessageCircle className="w-4 h-4 text-[#25D366]" />
                   Or message us directly on WhatsApp
                 </a>
               </div>

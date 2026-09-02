@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Send, CheckCircle2, MapPin, Phone, Clock, Mail, Navigation } from "lucide-react";
-import whatsappIcon from "@/assets/whatsapp.png";
+import { Send, CheckCircle2, MapPin, MessageCircle, Clock, Mail, Navigation } from "lucide-react";
 
 export function QueryForm() {
   const [form, setForm] = useState({
@@ -56,10 +55,26 @@ export function QueryForm() {
   };
 
   const contactDetails = [
-    { icon: <MapPin className="w-5 h-5" />, label: "Address", value: "Ojas Hospital, opp dinosaur circle, near Rakhiyal char rasta, Rakhiyal, Ahmedabad, Gujarat, 380021" },
-    { icon: <img src={whatsappIcon} alt="WhatsApp" className="w-5 h-5 object-contain" />, label: "WhatsApp & Call", value: "+91 75729 46732" },
-    { icon: <Mail className="w-5 h-5" />, label: "Email", value: "aadhyahomoeoclinic11@gmail.com" },
-    { icon: <Clock className="w-5 h-5" />, label: "Hours", value: "Mon – Sat: 10:00 AM – 7:00 PM" },
+    {
+      icon: <MapPin className="w-5 h-5 text-amber-300" />,
+      label: "Address",
+      value: "Ojas Hospital, opp dinosaur circle, near Rakhiyal char rasta, Rakhiyal, Ahmedabad, Gujarat, 380021",
+    },
+    {
+      icon: <MessageCircle className="w-5 h-5 text-amber-300" />,
+      label: "WhatsApp & Call",
+      value: "+91 75729 46732",
+    },
+    {
+      icon: <Mail className="w-5 h-5 text-amber-300" />,
+      label: "Email",
+      value: "aadhyahomoeoclinic11@gmail.com",
+    },
+    {
+      icon: <Clock className="w-5 h-5 text-amber-300" />,
+      label: "Hours",
+      value: "Mon – Sat: 10:00 AM – 7:00 PM",
+    },
   ];
 
   const conditions = [
@@ -73,63 +88,63 @@ export function QueryForm() {
   const directionsUrl = `https://www.google.com/maps/search/?api=1&query=Ojas+Hospital+opp+dinosaur+circle+Rakhiyal+Ahmedabad+Gujarat+380021`;
 
   return (
-    <section id="contact" className="py-24 bg-background">
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="contact" className="py-10 sm:py-16 bg-background">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Header */}
-        <div className="text-center mb-14">
+        <div className="text-center mb-6 sm:mb-10">
           <div
-            className="text-accent mb-3 tracking-widest uppercase"
-            style={{ fontFamily: "'Inter', sans-serif", fontSize: "12px", fontWeight: 500 }}
+            className="text-accent mb-2 tracking-widest uppercase text-xs font-semibold"
+            style={{ fontFamily: "'Inter', sans-serif" }}
           >
             Get in Touch
           </div>
           <h2
-            className="text-foreground mb-4"
-            style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem, 3vw, 2.6rem)", fontWeight: 700 }}
+            className="text-foreground mb-3 sm:mb-4 leading-tight"
+            style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", fontWeight: 700 }}
           >
             Book a <span className="text-primary italic font-normal">Consultation</span>
           </h2>
           <p
-            className="text-muted-foreground max-w-lg mx-auto"
-            style={{ fontFamily: "'Inter', sans-serif", fontSize: "15px", lineHeight: 1.7 }}
+            className="text-muted-foreground max-w-lg mx-auto text-xs sm:text-base leading-relaxed"
+            style={{ fontFamily: "'Inter', sans-serif" }}
           >
             Fill in your details and Dr. Mishra's team will reach out within 24 hours to confirm your appointment.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-5 gap-10">
+        <div className="grid lg:grid-cols-5 gap-6 sm:gap-10">
           {/* Contact info + Map */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-5 sm:space-y-6 reveal-on-scroll">
             <div
-              className="bg-primary rounded-3xl p-8 text-primary-foreground"
+              className="bg-primary rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-primary-foreground shadow-md"
             >
               <h3
-                className="mb-2 text-primary-foreground"
-                style={{ fontFamily: "'Playfair Display', serif", fontSize: "22px", fontWeight: 600 }}
+                className="mb-2 text-primary-foreground font-bold text-xl sm:text-2xl"
+                style={{ fontFamily: "'Playfair Display', serif" }}
               >
                 Visit the Clinic
               </h3>
               <p
-                className="text-primary-foreground/80 mb-8"
-                style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px", lineHeight: 1.6 }}
+                className="text-primary-foreground/80 mb-6 sm:mb-8 text-xs sm:text-sm leading-relaxed"
+                style={{ fontFamily: "'Inter', sans-serif" }}
               >
                 We welcome walk-ins and scheduled appointments. Come experience natural healing.
               </p>
 
-              <div className="space-y-5">
+              <div className="space-y-4 sm:space-y-5">
                 {contactDetails.map((c) => (
-                  <div key={c.label} className="flex gap-3">
-                    <div className="text-accent mt-0.5 flex-shrink-0">{c.icon}</div>
-                    <div>
+                  <div key={c.label} className="flex gap-3 items-start">
+                    <div className="mt-0.5 flex-shrink-0">{c.icon}</div>
+                    <div className="min-w-0">
                       <div
-                        className="text-primary-foreground/60"
-                        style={{ fontFamily: "'Inter', sans-serif", fontSize: "11px", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.05em" }}
+                        className="text-primary-foreground/60 text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider"
+                        style={{ fontFamily: "'Inter', sans-serif" }}
                       >
                         {c.label}
                       </div>
                       <div
-                        className="text-primary-foreground"
-                        style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px", lineHeight: 1.5 }}
+                        className="text-primary-foreground text-xs sm:text-sm leading-relaxed mt-0.5 break-words"
+                        style={{ fontFamily: "'Inter', sans-serif" }}
                       >
                         {c.value}
                       </div>
@@ -144,7 +159,7 @@ export function QueryForm() {
               <iframe
                 src={mapEmbedUrl}
                 width="100%"
-                height="260"
+                height="240"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
@@ -155,8 +170,8 @@ export function QueryForm() {
                 href={directionsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 bg-white py-3 text-primary hover:bg-secondary transition-colors"
-                style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px", fontWeight: 500 }}
+                className="flex items-center justify-center gap-2 bg-white py-3 text-primary hover:bg-secondary transition-colors text-xs sm:text-sm font-semibold border-t border-foreground/5"
+                style={{ fontFamily: "'Inter', sans-serif" }}
               >
                 <Navigation className="w-4 h-4" />
                 Get Directions on Google Maps
@@ -166,35 +181,35 @@ export function QueryForm() {
             {/* Social links */}
             <div className="bg-card rounded-2xl p-5 border border-foreground/8">
               <div
-                className="text-foreground mb-3"
-                style={{ fontFamily: "'Playfair Display', serif", fontSize: "16px", fontWeight: 600 }}
+                className="text-foreground mb-3 text-sm sm:text-base font-bold"
+                style={{ fontFamily: "'Playfair Display', serif" }}
               >
                 Follow for Health Tips
               </div>
-              <div className="flex flex-wrap gap-2.5">
+              <div className="flex flex-wrap gap-2">
                 <a
                   href="https://wa.me/917572946732"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-3.5 py-2 rounded-full border border-foreground/10 hover:bg-secondary transition-colors text-foreground"
-                  style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px" }}
+                  className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-foreground/10 hover:bg-secondary transition-colors text-foreground text-xs font-medium"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
                 >
-                  <img src={whatsappIcon} alt="WhatsApp" className="w-4 h-4 object-contain" />
+                  <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
                   WhatsApp
                 </a>
                 <a
                   href="https://www.instagram.com/dr_mayurs_aadhya_homeo"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-3.5 py-2 rounded-full border border-foreground/10 hover:bg-secondary transition-colors text-foreground"
-                  style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px" }}
+                  className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-foreground/10 hover:bg-secondary transition-colors text-foreground text-xs font-medium"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
                 >
                   📷 Instagram
                 </a>
                 <a
                   href="mailto:aadhyahomoeoclinic11@gmail.com"
-                  className="flex items-center gap-2 px-3.5 py-2 rounded-full border border-foreground/10 hover:bg-secondary transition-colors text-foreground"
-                  style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px" }}
+                  className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-foreground/10 hover:bg-secondary transition-colors text-foreground text-xs font-medium"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
                 >
                   ✉️ Email Us
                 </a>
@@ -205,35 +220,35 @@ export function QueryForm() {
           {/* Form */}
           <div className="lg:col-span-3">
             {submitted ? (
-              <div className="bg-card rounded-3xl p-12 border border-foreground/8 h-full flex flex-col items-center justify-center text-center">
-                <CheckCircle2 className="w-16 h-16 text-primary mb-4" />
+              <div className="bg-card rounded-2xl sm:rounded-3xl p-8 sm:p-12 border border-foreground/8 h-full flex flex-col items-center justify-center text-center">
+                <CheckCircle2 className="w-14 h-14 sm:w-16 sm:h-16 text-primary mb-4" />
                 <h3
-                  className="text-foreground mb-2"
-                  style={{ fontFamily: "'Playfair Display', serif", fontSize: "24px", fontWeight: 600 }}
+                  className="text-foreground mb-2 text-xl sm:text-2xl font-bold"
+                  style={{ fontFamily: "'Playfair Display', serif" }}
                 >
                   Query Received!
                 </h3>
                 <p
-                  className="text-muted-foreground max-w-sm"
-                  style={{ fontFamily: "'Inter', sans-serif", fontSize: "15px", lineHeight: 1.7 }}
+                  className="text-muted-foreground max-w-sm text-xs sm:text-base leading-relaxed"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
                 >
                   Thank you for reaching out. Dr. Mishra's team will contact you within 24 hours to schedule your consultation.
                 </p>
-                <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-6 w-full sm:w-auto">
                   <a
                     href="https://wa.me/917572946732"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-[#25D366] text-white px-5 py-2.5 rounded-full hover:bg-[#20bd5a] transition-colors"
-                    style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px", fontWeight: 500 }}
+                    className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white px-5 py-2.5 rounded-full hover:bg-[#20bd5a] transition-colors text-xs sm:text-sm font-semibold w-full sm:w-auto"
+                    style={{ fontFamily: "'Inter', sans-serif" }}
                   >
-                    <img src={whatsappIcon} alt="WhatsApp" className="w-4 h-4 object-contain" />
+                    <MessageCircle className="w-4 h-4" />
                     Chat on WhatsApp
                   </a>
                   <button
                     onClick={() => { setSubmitted(false); setForm({ name: "", phone: "", email: "", age: "", condition: "", message: "" }); }}
-                    className="text-primary border border-primary/30 px-5 py-2.5 rounded-full hover:bg-primary/5 transition-colors cursor-pointer"
-                    style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px" }}
+                    className="text-primary border border-primary/30 px-5 py-2.5 rounded-full hover:bg-primary/5 transition-colors cursor-pointer text-xs sm:text-sm font-semibold w-full sm:w-auto"
+                    style={{ fontFamily: "'Inter', sans-serif" }}
                   >
                     Submit another query
                   </button>
@@ -242,7 +257,7 @@ export function QueryForm() {
             ) : (
               <form
                 onSubmit={handleSubmit}
-                className="bg-card rounded-3xl p-8 border border-foreground/8 space-y-5 shadow-sm"
+                className="bg-card rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-foreground/8 space-y-4 sm:space-y-5 shadow-sm reveal-on-scroll"
               >
                 <div className="grid sm:grid-cols-2 gap-5">
                   {/* Name */}

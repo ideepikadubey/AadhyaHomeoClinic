@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, HelpCircle, PhoneCall } from "lucide-react";
-import whatsappIcon from "@/assets/whatsapp.png";
+import { ChevronDown, HelpCircle, PhoneCall, MessageCircle } from "lucide-react";
 
 interface FAQItem {
   question: string;
@@ -75,19 +74,19 @@ export function FaqSection() {
   };
 
   return (
-    <section id="faqs" className="py-20 sm:py-24 bg-background">
+    <section id="faqs" className="py-10 sm:py-16 bg-background">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-6 sm:mb-10">
           <div
-            className="inline-flex items-center gap-1.5 text-accent mb-3 tracking-widest uppercase"
+            className="inline-flex items-center gap-1.5 text-accent mb-2 tracking-widest uppercase"
             style={{ fontFamily: "'Inter', sans-serif", fontSize: "12px", fontWeight: 500 }}
           >
             <HelpCircle className="w-4 h-4" />
             <span>Got Questions?</span>
           </div>
           <h2
-            className="text-foreground mb-4 leading-tight"
+            className="text-foreground mb-3 leading-tight"
             style={{
               fontFamily: "'Playfair Display', serif",
               fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)",
@@ -97,15 +96,15 @@ export function FaqSection() {
             Frequently Asked <span className="text-primary italic font-normal">Questions</span>
           </h2>
           <p
-            className="text-muted-foreground max-w-xl mx-auto"
-            style={{ fontFamily: "'Inter', sans-serif", fontSize: "15px", lineHeight: 1.7 }}
+            className="text-muted-foreground max-w-xl mx-auto text-xs sm:text-base leading-relaxed"
+            style={{ fontFamily: "'Inter', sans-serif" }}
           >
             Everything you need to know about homoeopathic treatment, safety, consultations, and medicines at Aadhya Homoeo Clinic.
           </p>
         </div>
 
         {/* Category Filter Pills */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10">
+        <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-6 sm:mb-8">
           {categories.map((cat) => (
             <button
               key={cat}
@@ -132,7 +131,7 @@ export function FaqSection() {
             return (
               <div
                 key={faq.question}
-                className={`rounded-2xl transition-all duration-200 border ${
+                className={`rounded-2xl transition-all duration-200 border reveal-on-scroll ${
                   isOpen
                     ? "bg-card shadow-md border-primary/25 ring-1 ring-primary/10"
                     : "bg-card border-foreground/8 hover:border-primary/20"
@@ -192,20 +191,20 @@ export function FaqSection() {
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-3 shrink-0">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3 shrink-0 w-full sm:w-auto">
             <a
               href="https://wa.me/917572946732?text=Hello%20Dr.%20Mishra,%20I%20have%20a%20question%20regarding%20homoeopathic%20treatment."
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#25D366] text-white px-5 py-2.5 rounded-full hover:bg-[#20bd5a] transition-all text-sm font-medium shadow-sm"
+              className="inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white px-5 py-2.5 sm:py-3 rounded-full transition-all text-xs sm:text-sm font-semibold shadow-sm w-full sm:w-auto"
               style={{ fontFamily: "'Inter', sans-serif" }}
             >
-              <img src={whatsappIcon} alt="WhatsApp" className="w-5 h-5 object-contain" />
+              <MessageCircle className="w-4 h-4" />
               WhatsApp Us
             </a>
             <a
               href="tel:+917572946732"
-              className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 py-2.5 rounded-full hover:bg-primary/90 transition-all text-sm font-medium shadow-sm"
+              className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-5 py-2.5 sm:py-3 rounded-full hover:bg-primary/90 transition-all text-xs sm:text-sm font-semibold shadow-sm w-full sm:w-auto"
               style={{ fontFamily: "'Inter', sans-serif" }}
             >
               <PhoneCall className="w-4 h-4" />

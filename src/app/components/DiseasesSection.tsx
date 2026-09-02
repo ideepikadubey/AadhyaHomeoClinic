@@ -15,6 +15,26 @@ const categories = [
     ],
   },
   {
+    label: "Gastroenterology",
+    emoji: "🤢",
+    diseases: [
+      { name: "Gas & Bloating", desc: "Digestive discomfort and abdominal pressure" },
+      { name: "Acidity & Heartburn", desc: "Acid reflux and burning sensations in chest/throat" },
+      { name: "Constipation", desc: "Difficult or irregular bowel movements" },
+      { name: "IBS (Irritable Bowel Syndrome)", desc: "Cramping, abdominal pain, diarrhea, and constipation" },
+    ],
+  },
+  {
+    label: "Gynaec & Paediatric",
+    emoji: "👩‍🍼",
+    diseases: [
+      { name: "Menstrual Irregularities", desc: "Irregular, delayed, heavy, or missed cycles" },
+      { name: "PCOD / PCOS", desc: "Hormonal cysts in ovaries causing multiple symptoms" },
+      { name: "White Discharge", desc: "Excessive or pathological vaginal discharge" },
+      { name: "Dysmenorrhea", desc: "Severe, debilitating pain during menstrual periods" },
+    ],
+  },
+  {
     label: "Respiratory",
     emoji: "🫁",
     diseases: [
@@ -25,16 +45,7 @@ const categories = [
       { name: "Sinusitis", desc: "Painful inflammation of nasal passages and sinuses" },
     ],
   },
-  {
-    label: "Gastroenterology",
-    emoji: "🤢",
-    diseases: [
-      { name: "Gas & Bloating", desc: "Digestive discomfort and abdominal pressure" },
-      { name: "Acidity & Heartburn", desc: "Acid reflux and burning sensations in chest/throat" },
-      { name: "Constipation", desc: "Difficult or irregular bowel movements" },
-      { name: "IBS (Irritable Bowel Syndrome)", desc: "Cramping, abdominal pain, diarrhea, and constipation" },
-    ],
-  },
+
   {
     label: "Psychiatry",
     emoji: "🧠",
@@ -63,16 +74,7 @@ const categories = [
       { name: "Hyperthyroidism", desc: "Overactive thyroid leading to weight loss & anxiety" },
     ],
   },
-  {
-    label: "Gynaec & Paediatric",
-    emoji: "👩‍🍼",
-    diseases: [
-      { name: "Menstrual Irregularities", desc: "Irregular, delayed, heavy, or missed cycles" },
-      { name: "PCOD / PCOS", desc: "Hormonal cysts in ovaries causing multiple symptoms" },
-      { name: "White Discharge", desc: "Excessive or pathological vaginal discharge" },
-      { name: "Dysmenorrhea", desc: "Severe, debilitating pain during menstrual periods" },
-    ],
-  },
+
   {
     label: "Other Conditions",
     emoji: "🩺",
@@ -90,25 +92,25 @@ export function DiseasesSection() {
   const [active, setActive] = useState(0);
 
   return (
-    <section id="diseases" className="py-24 bg-muted">
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="diseases" className="py-10 sm:py-16 bg-muted">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Header */}
-        <div className="text-center mb-14">
+        <div className="text-center mb-6 sm:mb-10">
           <div
-            className="text-accent mb-3 tracking-widest uppercase"
+            className="text-accent mb-2 tracking-widest uppercase"
             style={{ fontFamily: "'Inter', sans-serif", fontSize: "12px", fontWeight: 500 }}
           >
             Treatment Spectrum
           </div>
           <h2
-            className="text-foreground mb-4"
+            className="text-foreground mb-3 sm:mb-4 leading-tight"
             style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem, 3vw, 2.6rem)", fontWeight: 700 }}
           >
             Homoeopathic Treatment for <span className="text-primary italic font-normal">Every Condition</span>
           </h2>
           <p
-            className="text-muted-foreground max-w-xl mx-auto"
-            style={{ fontFamily: "'Inter', sans-serif", fontSize: "15px", lineHeight: 1.7 }}
+            className="text-muted-foreground max-w-xl mx-auto text-xs sm:text-base leading-relaxed"
+            style={{ fontFamily: "'Inter', sans-serif" }}
           >
             Dr. Mayur N. Mishra specializes in a comprehensive range of clinical areas, providing natural,
             individualized constitutional remedies.
@@ -116,48 +118,47 @@ export function DiseasesSection() {
         </div>
 
         {/* Category tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10">
+        <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-8 sm:mb-10">
           {categories.map((cat, i) => (
             <button
               key={cat.label}
               onClick={() => setActive(i)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all cursor-pointer ${
-                active === i
-                  ? "bg-primary text-primary-foreground border-primary"
-                  : "bg-card text-foreground border-primary/20 hover:border-primary/50"
-              }`}
-              style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px" }}
+              className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border transition-all cursor-pointer text-xs sm:text-sm ${active === i
+                ? "bg-primary text-primary-foreground border-primary font-semibold shadow-xs"
+                : "bg-card text-foreground border-primary/20 hover:border-primary/50"
+                }`}
+              style={{ fontFamily: "'Inter', sans-serif" }}
             >
               <span>{cat.emoji}</span>
-              {cat.label}
+              <span>{cat.label}</span>
             </button>
           ))}
         </div>
 
         {/* Disease cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4">
           {categories[active].diseases.map((d, i) => (
             <div
               key={d.name}
-              className="bg-card rounded-2xl p-5 border border-primary/10 hover:border-primary/35 hover:shadow-md transition-all group"
+              className="bg-card rounded-2xl p-4 sm:p-5 border border-primary/10 hover:border-primary/35 hover:shadow-md transition-all group reveal-on-scroll"
             >
               <div className="flex items-start gap-3">
                 <div
-                  className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-primary flex-shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
-                  style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px", fontWeight: 600 }}
+                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-secondary flex items-center justify-center text-primary flex-shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors text-xs sm:text-sm font-semibold"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
                 >
                   {i + 1}
                 </div>
                 <div>
                   <div
-                    className="text-foreground mb-1"
-                    style={{ fontFamily: "'Playfair Display', serif", fontSize: "16px", fontWeight: 600 }}
+                    className="text-foreground mb-1 text-sm sm:text-base font-bold"
+                    style={{ fontFamily: "'Playfair Display', serif" }}
                   >
                     {d.name}
                   </div>
                   <div
-                    className="text-muted-foreground"
-                    style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px", lineHeight: 1.6 }}
+                    className="text-muted-foreground text-xs sm:text-sm leading-relaxed"
+                    style={{ fontFamily: "'Inter', sans-serif" }}
                   >
                     {d.desc}
                   </div>
@@ -168,17 +169,17 @@ export function DiseasesSection() {
         </div>
 
         {/* CTA */}
-        <div className="text-center mt-12">
+        <div className="text-center mt-10 sm:mt-12">
           <p
-            className="text-muted-foreground mb-4"
-            style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px" }}
+            className="text-muted-foreground mb-3 sm:mb-4 text-xs sm:text-sm"
+            style={{ fontFamily: "'Inter', sans-serif" }}
           >
             Don't see your condition? Contact us — we treat many more.
           </p>
           <a
             href="#contact"
-            className="bg-primary text-primary-foreground px-8 py-3.5 rounded-full hover:bg-primary/90 transition-all inline-block hover:shadow-lg hover:shadow-primary/20"
-            style={{ fontFamily: "'Inter', sans-serif", fontSize: "15px" }}
+            className="bg-primary text-primary-foreground px-7 sm:px-8 py-3 sm:py-3.5 rounded-full hover:bg-primary/90 transition-all inline-block hover:shadow-lg hover:shadow-primary/20 text-xs sm:text-sm font-semibold"
+            style={{ fontFamily: "'Inter', sans-serif" }}
           >
             Ask About Your Condition
           </a>

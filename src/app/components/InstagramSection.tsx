@@ -1,113 +1,203 @@
-import { Instagram, Heart, MessageCircle, ExternalLink } from "lucide-react";
+import { useState, useRef } from "react";
+import { Instagram, ExternalLink, Play, Volume2, VolumeX, Sparkles } from "lucide-react";
+import doctorsDayVideo from "@/assets/Doctor's Day.mp4";
+import journeyVideo from "@/assets/Journey.mp4";
+import testimonialVideo from "@/assets/Testimonial.mp4";
+import whatIsHomoepathyVideo from "@/assets/What is Homoepathy.mp4";
 
-const posts = [
+interface VideoPost {
+  id: string;
+  src: string;
+  title: string;
+  tag: string;
+  caption: string;
+  date: string;
+}
+
+const VIDEO_POSTS: VideoPost[] = [
   {
-    id: 1,
-    img: "https://images.unsplash.com/photo-1725267882596-2d08e560b250?w=400&h=400&fit=crop&auto=format",
-    caption: "🌿 Did you know homeopathy can effectively manage chronic sinusitis without antibiotics? Natural, gentle, and long-lasting relief. Book your consultation today! #HomeopathyCare #AadhyaHomeo",
-    likes: 142,
-    comments: 18,
-    date: "2 days ago",
+    id: "what-is-homoeopathy",
+    src: whatIsHomoepathyVideo,
+    title: "What is Homoeopathy?",
+    tag: "Education",
+    caption:
+      "Understanding the gentle science and root-cause healing principles of classical homoeopathy by Dr. Mayur N. Mishra. #Homoeopathy #NaturalHealing #AadhyaClinic",
+    date: "Educational Reel",
   },
   {
-    id: 2,
-    img: "https://images.unsplash.com/photo-1708667027894-6e9481ae1baf?w=400&h=400&fit=crop&auto=format",
-    caption: "🍃 Nature heals. Our remedies are derived from the purest natural sources — plants, minerals, and more. Trust the wisdom of classical homeopathy. #NaturalMedicine",
-    likes: 98,
-    comments: 12,
-    date: "5 days ago",
+    id: "testimonial",
+    src: testimonialVideo,
+    title: "Patient Recovery & Testimonial",
+    tag: "Patient Story",
+    caption:
+      "A heartwarming story of natural recovery and long-term relief without side effects. Real healing through personalized treatment. #PatientStory #Recovery",
+    date: "Patient Story",
   },
   {
-    id: 3,
-    img: "https://images.unsplash.com/photo-1638988561160-7c0019c84a5c?w=400&h=400&fit=crop&auto=format",
-    caption: "✨ Patient Success Story: After 3 months of treatment, Mrs. R.K. is completely psoriasis-free! Homeopathy works when you give it the time it deserves. #PatientStory #Psoriasis",
-    likes: 217,
-    comments: 34,
-    date: "1 week ago",
+    id: "journey",
+    src: journeyVideo,
+    title: "Our Healing Journey",
+    tag: "Clinic Journey",
+    caption:
+      "The vision behind Aadhya Homoeo Clinic and our mission to make gentle, scientific homoeopathic care accessible to all. #HealingWithHarmony",
+    date: "Clinic Story",
   },
   {
-    id: 4,
-    img: "https://images.unsplash.com/photo-1764249453870-e3e28c80b8b2?w=400&h=400&fit=crop&auto=format",
-    caption: "🌸 PCOD can be managed beautifully with homeopathy! No hormonal pills, no side effects. We've helped 100+ women regulate their cycles naturally. #PCOD #WomensHealth",
-    likes: 183,
-    comments: 27,
-    date: "1 week ago",
-  },
-  {
-    id: 5,
-    img: "https://images.unsplash.com/photo-1611072852066-44190157f2aa?w=400&h=400&fit=crop&auto=format",
-    caption: "💚 Quality remedies, quality care. Every medicine at Aadhya Homeo Clinic is sourced from certified manufacturers. Your health is our priority. #QualityCare",
-    likes: 76,
-    comments: 9,
-    date: "10 days ago",
-  },
-  {
-    id: 6,
-    img: "https://images.unsplash.com/photo-1760163287827-12bc4137001c?w=400&h=400&fit=crop&auto=format",
-    caption: "🌱 Treating children with homeopathy — safe, gentle, and effective. No fear of side effects! Kids love our treatment. #ChildHealth #PediatricHomeopathy",
-    likes: 156,
-    comments: 22,
-    date: "2 weeks ago",
-  },
-  {
-    id: 7,
-    img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&h=400&fit=crop&auto=format",
-    caption: "🧠 Mental health matters! Homeopathy offers safe, natural relief for anxiety, depression & insomnia — without dependency. Consult Dr. Mishra today. #MentalHealth #Homeopathy",
-    likes: 204,
-    comments: 31,
-    date: "2 weeks ago",
-  },
-  {
-    id: 8,
-    img: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=400&h=400&fit=crop&auto=format",
-    caption: "💊 Did you know? Homeopathic remedies are derived from natural substances & are completely non-toxic. Perfect for the whole family — from infants to seniors! #NaturalHealth",
-    likes: 119,
-    comments: 14,
-    date: "3 weeks ago",
-  },
-  {
-    id: 9,
-    img: "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=400&h=400&fit=crop&auto=format",
-    caption: "🌺 Thyroid disorders — both hypo and hyperthyroidism — respond beautifully to constitutional homoeopathic treatment. Real healing, no side effects. #ThyroidHealth",
-    likes: 88,
-    comments: 11,
-    date: "3 weeks ago",
-  },
-  {
-    id: 10,
-    img: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=400&fit=crop&auto=format",
-    caption: "🦴 Arthritis & joint pain can be significantly reduced with homoeopathy! Patients who've tried everything else find lasting relief here. Book your consultation. #ArthritisRelief",
-    likes: 143,
-    comments: 19,
-    date: "1 month ago",
+    id: "doctors-day",
+    src: doctorsDayVideo,
+    title: "Doctor's Day Special Message",
+    tag: "Special Feature",
+    caption:
+      "Dedicated to every patient who trusted natural healing on our journey. Celebrating medical empathy and patient care. #DoctorsDay #HomoeopathyCare",
+    date: "Featured Message",
   },
 ];
 
+function VideoCard({ post }: { post: VideoPost }) {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+
+  const togglePlay = () => {
+    if (!videoRef.current) return;
+    if (isPlaying) {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      videoRef.current.play();
+      setIsPlaying(true);
+    }
+  };
+
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!videoRef.current) return;
+    videoRef.current.muted = !videoRef.current.muted;
+    setIsMuted(videoRef.current.muted);
+  };
+
+  return (
+    <div className="bg-card rounded-3xl overflow-hidden border border-primary/15 shadow-sm hover:shadow-xl hover:border-primary/30 transition-all duration-300 flex flex-col group reveal-on-scroll">
+      {/* Clean, Uncongested Top Header */}
+      <div className="px-4 py-3 flex items-center justify-between border-b border-primary/10 bg-secondary/30">
+        <div className="flex items-center gap-1.5 min-w-0">
+          <Instagram className="w-3.5 h-3.5 text-rose-500 flex-shrink-0" />
+          <span className="text-foreground text-xs font-semibold tracking-tight truncate">
+            @dr_mayurs_aadhya_homeo
+          </span>
+        </div>
+        <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-primary/5 text-primary border border-primary/10 flex-shrink-0 ml-2">
+          {post.tag}
+        </span>
+      </div>
+
+      {/* Video Container (Reel Format) */}
+      <div
+        className="relative bg-black aspect-[9/14] sm:aspect-[4/5] overflow-hidden cursor-pointer flex items-center justify-center"
+        onClick={togglePlay}
+      >
+        <video
+          ref={videoRef}
+          src={post.src}
+          playsInline
+          loop
+          muted={isMuted}
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+          className="w-full h-full object-cover"
+        />
+
+        {/* Play/Pause Overlay */}
+        {!isPlaying && (
+          <div className="absolute inset-0 bg-black/40 flex items-center justify-center transition-all group-hover:bg-black/30">
+            <div className="w-14 h-14 rounded-full bg-white/90 backdrop-blur text-primary flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
+              <Play className="w-6 h-6 ml-1 fill-current" />
+            </div>
+          </div>
+        )}
+
+        {/* Video Controls Overlay */}
+        <div className="absolute bottom-3 right-3 flex items-center gap-2">
+          <button
+            onClick={toggleMute}
+            className="w-8 h-8 rounded-full bg-black/60 backdrop-blur text-white flex items-center justify-center hover:bg-black/80 transition-colors shadow"
+            aria-label={isMuted ? "Unmute" : "Mute"}
+          >
+            {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+          </button>
+        </div>
+
+        {/* Title Badge Overlay on Video */}
+        <div className="absolute top-3 left-3 right-3 pointer-events-none">
+          <div className="bg-black/60 backdrop-blur-md text-white text-xs font-semibold px-3 py-1.5 rounded-full inline-block shadow-md max-w-full truncate">
+            {post.title}
+          </div>
+        </div>
+      </div>
+
+      {/* Card Body */}
+      <div className="p-4 sm:p-5 flex flex-col flex-1 justify-between bg-card gap-3">
+        <div>
+          <h4
+            className="text-foreground text-base font-bold mb-1.5 leading-snug"
+            style={{ fontFamily: "'Playfair Display', serif" }}
+          >
+            {post.title}
+          </h4>
+          <p
+            className="text-muted-foreground text-xs leading-relaxed line-clamp-3"
+            style={{ fontFamily: "'Inter', sans-serif" }}
+          >
+            {post.caption}
+          </p>
+        </div>
+
+        {/* Watch on Instagram Link */}
+        <div className="pt-3 border-t border-primary/5 flex items-center justify-between">
+          <span className="text-[11px] text-muted-foreground font-medium">
+            {post.date}
+          </span>
+          <a
+            href="https://www.instagram.com/dr_mayurs_aadhya_homeo"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:text-rose-600 transition-colors"
+          >
+            Watch Reel
+            <ExternalLink className="w-3.5 h-3.5" />
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function InstagramSection() {
   return (
-    <section id="updates" className="py-24 bg-muted">
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="updates" className="py-10 sm:py-16 bg-muted relative overflow-hidden">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 sm:mb-10 gap-6">
           <div>
-            <div
-              className="text-accent mb-3 tracking-widest uppercase flex items-center gap-2"
-              style={{ fontFamily: "'Inter', sans-serif", fontSize: "12px", fontWeight: 500 }}
-            >
-              <Instagram className="w-4 h-4" />
-              Latest from Instagram
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/5 border border-primary/15 text-primary text-xs font-semibold uppercase tracking-wider mb-3 sm:mb-4">
+              <Instagram className="w-3.5 h-3.5 text-rose-500" />
+              Instagram Videos & Reels
             </div>
             <h2
-              className="text-foreground"
-              style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem, 3vw, 2.4rem)", fontWeight: 700 }}
+              className="text-foreground leading-tight"
+              style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: "clamp(1.9rem, 3.5vw, 2.8rem)",
+                fontWeight: 700,
+              }}
             >
-              Stay <span className="text-primary italic font-normal">Connected</span> with Us
+              Watch & Learn on <span className="text-primary italic font-normal">Instagram</span>
             </h2>
             <p
-              className="text-muted-foreground mt-2 max-w-md"
-              style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px" }}
+              className="text-muted-foreground mt-2 max-w-xl text-xs sm:text-base leading-relaxed"
+              style={{ fontFamily: "'Inter', sans-serif" }}
             >
-              Follow us for health tips, patient stories, and clinic updates. Showing our last 10 posts.
+              Explore informative video insights, patient recovery stories, and health awareness guides shared by Dr. Mayur N. Mishra.
             </p>
           </div>
 
@@ -115,95 +205,50 @@ export function InstagramSection() {
             href="https://www.instagram.com/dr_mayurs_aadhya_homeo"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white px-5 py-2.5 rounded-full hover:opacity-90 transition-opacity flex-shrink-0 cursor-pointer"
-            style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px" }}
+            className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white px-5 sm:px-6 py-2.5 sm:py-3 rounded-full hover:opacity-95 hover:shadow-lg transition-all flex-shrink-0 cursor-pointer text-xs sm:text-sm font-semibold shadow w-full sm:w-auto"
+            style={{ fontFamily: "'Inter', sans-serif" }}
           >
             <Instagram className="w-4 h-4" />
             Follow @dr_mayurs_aadhya_homeo
           </a>
         </div>
 
-        {/* Grid — 10 posts in 2-col on mobile, 3-col on tablet, 5-col on desktop */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-          {posts.map((post, i) => (
-            <a
-              key={post.id}
-              href="https://www.instagram.com/dr_mayurs_aadhya_homeo"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group rounded-xl overflow-hidden border border-primary/10 hover:border-primary/30 hover:shadow-lg transition-all bg-card cursor-pointer relative animate-fade-in"
-              style={{ animationDelay: `${i * 50}ms` }}
-            >
-              {/* Image */}
-              <div className="relative overflow-hidden aspect-square">
-                <img
-                  src={post.img}
-                  alt={`Instagram post ${post.id}`}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                {/* Hover overlay */}
-                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-3 p-3">
-                  <div className="flex items-center gap-3 text-white">
-                    <div className="flex items-center gap-1">
-                      <Heart className="w-4 h-4 fill-white" />
-                      <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px", fontWeight: 500 }}>{post.likes}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <MessageCircle className="w-4 h-4 fill-white" />
-                      <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px", fontWeight: 500 }}>{post.comments}</span>
-                    </div>
-                  </div>
-                  <p
-                    className="text-white/90 text-center line-clamp-3 hidden sm:block"
-                    style={{ fontFamily: "'Inter', sans-serif", fontSize: "11px", lineHeight: 1.5 }}
-                  >
-                    {post.caption}
-                  </p>
-                </div>
-
-                {/* "Latest" badge on first post */}
-                {i === 0 && (
-                  <div
-                    className="absolute top-2 left-2 bg-accent text-white px-2 py-0.5 rounded-full"
-                    style={{ fontFamily: "'Inter', sans-serif", fontSize: "10px", fontWeight: 600 }}
-                  >
-                    Latest
-                  </div>
-                )}
-              </div>
-
-              {/* Date strip */}
-              <div className="px-2.5 py-2 flex items-center justify-between">
-                <span
-                  className="text-muted-foreground"
-                  style={{ fontFamily: "'Inter', sans-serif", fontSize: "11px" }}
-                >
-                  {post.date}
-                </span>
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <span className="flex items-center gap-0.5" style={{ fontSize: "11px" }}>
-                    <Heart className="w-3 h-3" /> {post.likes}
-                  </span>
-                </div>
-              </div>
-            </a>
+        {/* 4 Video Reels Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          {VIDEO_POSTS.map((post) => (
+            <VideoCard key={post.id} post={post} />
           ))}
         </div>
 
-        {/* Bottom CTA */}
-        <div className="text-center mt-10">
+        {/* Bottom CTA Banner */}
+        <div className="mt-10 sm:mt-12 bg-card rounded-2xl p-4 sm:p-6 border border-primary/15 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 text-center sm:text-left">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-rose-50 border border-rose-200 text-rose-600 flex items-center justify-center flex-shrink-0">
+              <Instagram className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="text-foreground font-semibold text-sm sm:text-base">
+                Join our Instagram Community
+              </div>
+              <div className="text-muted-foreground text-xs sm:text-sm">
+                Daily health tips, clinical case discussions, and live Q&A sessions with Dr. Mayur Mishra.
+              </div>
+            </div>
+          </div>
+
           <a
             href="https://www.instagram.com/dr_mayurs_aadhya_homeo"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-primary border border-primary/30 px-6 py-3 rounded-full hover:bg-primary/5 transition-colors cursor-pointer"
-            style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px" }}
+            className="inline-flex items-center justify-center gap-2 border border-primary/25 text-primary hover:bg-primary/5 px-5 sm:px-6 py-2.5 rounded-full transition-all text-xs sm:text-sm font-medium whitespace-nowrap shadow-xs hover:shadow w-full sm:w-auto"
           >
             View All Posts on Instagram
-            <ExternalLink className="w-4 h-4" />
+            <ExternalLink className="w-3.5 h-3.5" />
           </a>
         </div>
       </div>
     </section>
   );
 }
+
+

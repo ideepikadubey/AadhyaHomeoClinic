@@ -1,6 +1,5 @@
-import { Instagram, Mail, Phone, MapPin, ExternalLink } from "lucide-react";
-import clinicLogo from "@/assets/logo.jpg";
-import whatsappIcon from "@/assets/whatsapp.png";
+import { Instagram, Mail, Phone, MapPin, ExternalLink, MessageCircle, Clock } from "lucide-react";
+import clinicLogo from "@/assets/HomeoLogoCropped.png";
 
 interface FooterProps {
   onOpenConsultation: () => void;
@@ -10,6 +9,7 @@ export function Footer({ onOpenConsultation }: FooterProps) {
   const quickLinks = [
     { label: "Home", href: "#home" },
     { label: "About Dr. Mishra", href: "#about" },
+    { label: "Hospital Affiliations", href: "#affiliations" },
     { label: "Diseases Treated", href: "#diseases" },
     { label: "Patient Guidelines", href: "#guidelines" },
     { label: "FAQs", href: "#faqs" },
@@ -27,31 +27,36 @@ export function Footer({ onOpenConsultation }: FooterProps) {
   ];
 
   return (
-    <footer style={{ background: "#000000" }}>
+    <footer
+      style={{
+        background: "linear-gradient(180deg, #0f241e 0%, #0a1714 100%)",
+      }}
+      className="text-white relative overflow-hidden"
+    >
       {/* Top CTA band */}
       <div
         className="border-b"
-        style={{ borderColor: "rgba(255,255,255,0.1)", background: "var(--primary)" }}
+        style={{ borderColor: "rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.03)" }}
       >
-        <div className="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10 flex flex-col md:flex-row items-center justify-between gap-5 sm:gap-6 text-center md:text-left">
           <div>
             <h3
-              className="text-primary-foreground"
-              style={{ fontFamily: "'Playfair Display', serif", fontSize: "22px", fontWeight: 600 }}
+              className="text-white text-xl sm:text-2xl font-bold"
+              style={{ fontFamily: "'Playfair Display', serif" }}
             >
               Ready to Begin Your Healing Journey?
             </h3>
             <p
-              className="text-primary-foreground/75 mt-1"
-              style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px" }}
+              className="text-white/75 mt-1 text-xs sm:text-sm"
+              style={{ fontFamily: "'Inter', sans-serif" }}
             >
               Book a consultation today — natural health is just a step away.
             </p>
           </div>
           <button
             onClick={onOpenConsultation}
-            className="bg-accent text-accent-foreground px-8 py-3.5 rounded-full hover:opacity-95 hover:shadow-lg transition-all flex-shrink-0 cursor-pointer"
-            style={{ fontFamily: "'Inter', sans-serif", fontSize: "15px", fontWeight: 500 }}
+            className="bg-white text-[#0a1714] font-semibold px-7 sm:px-8 py-3 sm:py-3.5 rounded-full hover:bg-emerald-50 hover:shadow-lg transition-all flex-shrink-0 cursor-pointer text-xs sm:text-sm w-full sm:w-auto shadow-md"
+            style={{ fontFamily: "'Inter', sans-serif" }}
           >
             Book Free Consultation
           </button>
@@ -59,33 +64,35 @@ export function Footer({ onOpenConsultation }: FooterProps) {
       </div>
 
       {/* Main footer */}
-      <div className="max-w-6xl mx-auto px-6 py-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
         {/* Brand */}
         <div className="lg:col-span-1">
-          <div className="flex items-center gap-2.5 mb-5">
-            <img
-              src={clinicLogo}
-              alt="Aadhya Homoeo Clinic Logo"
-              className="w-10 h-10 rounded-full object-cover shadow"
-            />
-            <div>
+          <div className="flex items-center gap-3 mb-4 sm:mb-5">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-white p-1 shadow-sm border border-white/20 flex items-center justify-center flex-shrink-0">
+              <img
+                src={clinicLogo}
+                alt="Aadhya Homoeo Clinic Logo"
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <div className="min-w-0">
               <div
-                className="text-primary-foreground"
-                style={{ fontFamily: "'Playfair Display', serif", fontSize: "15px", fontWeight: 600 }}
+                className="text-white truncate text-sm sm:text-base font-bold"
+                style={{ fontFamily: "'Playfair Display', serif" }}
               >
                 Aadhya Homoeo Clinic
               </div>
               <div
-                className="text-primary-foreground/60"
-                style={{ fontFamily: "'Inter', sans-serif", fontSize: "11px" }}
+                className="text-emerald-300/80 truncate text-[10px] sm:text-[11px]"
+                style={{ fontFamily: "'Inter', sans-serif" }}
               >
                 Dr. Mayur N. Mishra
               </div>
             </div>
           </div>
           <p
-            className="text-primary-foreground/60 mb-5"
-            style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px", lineHeight: 1.75 }}
+            className="text-white/65 mb-5 text-xs sm:text-sm leading-relaxed"
+            style={{ fontFamily: "'Inter', sans-serif" }}
           >
             Providing compassionate, evidence-based homoeopathic care. Your journey to natural
             health starts here.
@@ -95,52 +102,45 @@ export function Footer({ onOpenConsultation }: FooterProps) {
               href="https://wa.me/917572946732"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-primary-foreground/60 hover:text-primary-foreground hover:border-white/30 transition-colors p-2"
+              className="w-9 h-9 rounded-full border border-white/15 bg-white/5 flex items-center justify-center text-white/70 hover:text-white hover:border-white/40 hover:bg-white/10 transition-colors"
               aria-label="WhatsApp"
             >
-              <img src={whatsappIcon} alt="WhatsApp" className="w-full h-full object-contain" />
+              <MessageCircle className="w-4 h-4 text-emerald-400" />
             </a>
             <a
               href="https://www.instagram.com/dr_mayurs_aadhya_homeo"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-primary-foreground/60 hover:text-primary-foreground hover:border-white/30 transition-colors"
+              className="w-9 h-9 rounded-full border border-white/15 bg-white/5 flex items-center justify-center text-white/70 hover:text-white hover:border-white/40 hover:bg-white/10 transition-colors"
               aria-label="Instagram"
             >
-              <Instagram className="w-4 h-4" />
+              <Instagram className="w-4 h-4 text-rose-400" />
             </a>
             <a
               href="mailto:aadhyahomoeoclinic11@gmail.com"
-              className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-primary-foreground/60 hover:text-primary-foreground hover:border-white/30 transition-colors"
+              className="w-9 h-9 rounded-full border border-white/15 bg-white/5 flex items-center justify-center text-white/70 hover:text-white hover:border-white/40 hover:bg-white/10 transition-colors"
               aria-label="Email"
             >
-              <Mail className="w-4 h-4" />
-            </a>
-            <a
-              href="tel:+917572946732"
-              className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-primary-foreground/60 hover:text-primary-foreground hover:border-white/30 transition-colors"
-              aria-label="Phone"
-            >
-              <Phone className="w-4 h-4" />
+              <Mail className="w-4 h-4 text-amber-300" />
             </a>
           </div>
         </div>
 
-        {/* Quick Links */}
+        {/* Quick links */}
         <div>
-          <h4
-            className="text-primary-foreground mb-5"
-            style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em" }}
+          <div
+            className="text-white mb-4 text-sm sm:text-base font-bold"
+            style={{ fontFamily: "'Playfair Display', serif" }}
           >
             Quick Links
-          </h4>
-          <ul className="space-y-3">
+          </div>
+          <ul className="space-y-2 text-xs sm:text-sm">
             {quickLinks.map((l) => (
               <li key={l.label}>
                 <a
                   href={l.href}
-                  className="text-primary-foreground/60 hover:text-primary-foreground/90 transition-colors flex items-center gap-1.5"
-                  style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px" }}
+                  className="text-white/65 hover:text-white transition-colors"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
                 >
                   {l.label}
                 </a>
@@ -149,21 +149,21 @@ export function Footer({ onOpenConsultation }: FooterProps) {
           </ul>
         </div>
 
-        {/* Conditions */}
+        {/* Clinical domains */}
         <div>
-          <h4
-            className="text-primary-foreground mb-5"
-            style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em" }}
+          <div
+            className="text-white mb-4 text-sm sm:text-base font-bold"
+            style={{ fontFamily: "'Playfair Display', serif" }}
           >
-            Conditions Treated
-          </h4>
-          <ul className="space-y-3">
+            Specializations
+          </div>
+          <ul className="space-y-2 text-xs sm:text-sm">
             {diseases.map((d) => (
               <li key={d}>
                 <a
                   href="#diseases"
-                  className="text-primary-foreground/60 hover:text-primary-foreground/90 transition-colors"
-                  style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px" }}
+                  className="text-white/65 hover:text-white transition-colors"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
                 >
                   {d}
                 </a>
@@ -172,69 +172,66 @@ export function Footer({ onOpenConsultation }: FooterProps) {
           </ul>
         </div>
 
-        {/* Contact */}
+        {/* Contact info */}
         <div>
-          <h4
-            className="text-primary-foreground mb-5"
-            style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em" }}
+          <div
+            className="text-white mb-4 text-sm sm:text-base font-bold"
+            style={{ fontFamily: "'Playfair Display', serif" }}
           >
-            Contact Us
-          </h4>
-          <div className="space-y-4">
-            <div className="flex gap-3">
-              <MapPin className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
+            Contact & Visit
+          </div>
+          <ul className="space-y-3 text-xs sm:text-sm">
+            <li className="flex items-start gap-2.5">
+              <MapPin className="w-4 h-4 text-amber-300 flex-shrink-0 mt-0.5" />
               <span
-                className="text-primary-foreground/60"
-                style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px", lineHeight: 1.6 }}
+                className="text-white/65 leading-snug"
+                style={{ fontFamily: "'Inter', sans-serif" }}
               >
-                Ojas Hospital, opp dinosaur circle,<br />near Rakhiyal char rasta, Rakhiyal,<br />Ahmedabad, Gujarat 380021
+                Ojas Hospital, opp. dinosaur circle, Rakhiyal, Ahmedabad, Gujarat 380021
               </span>
-            </div>
-            <div className="flex gap-3 items-center">
-              <img src={whatsappIcon} alt="WhatsApp" className="w-4 h-4 object-contain flex-shrink-0" />
+            </li>
+            <li className="flex items-center gap-2.5">
+              <Phone className="w-4 h-4 text-amber-300 flex-shrink-0" />
+              <a
+                href="tel:+917572946732"
+                className="text-white/65 hover:text-white transition-colors"
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              >
+                +91 75729 46732 (Call)
+              </a>
+            </li>
+            <li className="flex items-center gap-2.5">
+              <MessageCircle className="w-4 h-4 text-amber-300 flex-shrink-0" />
               <a
                 href="https://wa.me/917572946732"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary-foreground/60 hover:text-primary-foreground/90 transition-colors"
-                style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px" }}
+                className="text-white/65 hover:text-white transition-colors"
+                style={{ fontFamily: "'Inter', sans-serif" }}
               >
                 +91 75729 46732 (WhatsApp)
               </a>
-            </div>
-            <div className="flex gap-3">
-              <Phone className="w-4 h-4 text-accent flex-shrink-0" />
-              <a
-                href="tel:+917572946732"
-                className="text-primary-foreground/60 hover:text-primary-foreground/90 transition-colors"
-                style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px" }}
-              >
-                +91 75729 46732 (Direct Call)
-              </a>
-            </div>
-            <div className="flex gap-3">
-              <Mail className="w-4 h-4 text-accent flex-shrink-0" />
+            </li>
+            <li className="flex items-center gap-2.5">
+              <Mail className="w-4 h-4 text-amber-300 flex-shrink-0" />
               <a
                 href="mailto:aadhyahomoeoclinic11@gmail.com"
-                className="text-primary-foreground/60 hover:text-primary-foreground/90 transition-colors"
-                style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px" }}
+                className="text-white/65 hover:text-white transition-colors truncate"
+                style={{ fontFamily: "'Inter', sans-serif" }}
               >
                 aadhyahomoeoclinic11@gmail.com
               </a>
-            </div>
-            <div className="flex gap-3">
-              <Instagram className="w-4 h-4 text-accent flex-shrink-0" />
-              <a
-                href="https://www.instagram.com/dr_mayurs_aadhya_homeo"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary-foreground/60 hover:text-primary-foreground/90 transition-colors flex items-center gap-1"
-                style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px" }}
+            </li>
+            <li className="flex items-start gap-2.5">
+              <Clock className="w-4 h-4 text-amber-300 flex-shrink-0 mt-0.5" />
+              <span
+                className="text-white/65"
+                style={{ fontFamily: "'Inter', sans-serif" }}
               >
-                @dr_mayurs_aadhya_homeo <ExternalLink className="w-3 h-3" />
-              </a>
-            </div>
-          </div>
+                Mon – Sat: 10:00 AM – 7:00 PM
+              </span>
+            </li>
+          </ul>
         </div>
       </div>
 
@@ -243,19 +240,26 @@ export function Footer({ onOpenConsultation }: FooterProps) {
         className="border-t"
         style={{ borderColor: "rgba(255,255,255,0.08)" }}
       >
-        <div className="max-w-6xl mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
           <p
-            className="text-primary-foreground/40"
-            style={{ fontFamily: "'Inter', sans-serif", fontSize: "12px" }}
+            className="text-white/45 text-xs"
+            style={{ fontFamily: "'Inter', sans-serif" }}
           >
-            © 2026 Aadhya Homoeo Clinic · Dr. Mayur N. Mishra. All rights reserved.
+            © {new Date().getFullYear()} Aadhya Homoeo Clinic · Dr. Mayur N. Mishra (Reg. No.: G-32424). All rights reserved.
           </p>
-          <p
-            className="text-primary-foreground/40"
-            style={{ fontFamily: "'Inter', sans-serif", fontSize: "12px" }}
-          >
-            Homoeopathic treatment results may vary. Consult for personalized advice.
-          </p>
+          <div className="flex flex-wrap items-center justify-center gap-3 text-xs text-white/45">
+            <a href="#about" className="hover:text-white/70 transition-colors">
+              About Doctor
+            </a>
+            <span>·</span>
+            <a href="#affiliations" className="hover:text-white/70 transition-colors">
+              Affiliations
+            </a>
+            <span>·</span>
+            <a href="#contact" className="hover:text-white/70 transition-colors">
+              Clinic Location
+            </a>
+          </div>
         </div>
       </div>
     </footer>

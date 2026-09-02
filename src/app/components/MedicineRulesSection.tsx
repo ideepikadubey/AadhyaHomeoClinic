@@ -1,5 +1,6 @@
+import { useState } from "react";
 import {
-  Smile,
+  Utensils,
   Sparkles,
   Coffee,
   Pill,
@@ -8,130 +9,231 @@ import {
   Ban,
   Timer,
   Activity,
-  AlertCircle
+  Hand,
+  CheckCircle2,
+  XCircle,
+  HelpCircle,
+  ShieldCheck,
+  Sun
 } from "lucide-react";
 
-const rules = [
+interface RuleItem {
+  id: string;
+  category: "intake" | "storage" | "avoid" | "followup";
+  title: string;
+  desc: string;
+  icon: React.ReactNode;
+  tag: string;
+}
+
+const CATEGORIES = [
+  { id: "all", label: "All Guidelines (10)" },
+  { id: "intake", label: "🌿 How to Take" },
+  { id: "storage", label: "📦 Handling & Storage" },
+  { id: "avoid", label: "⚠️ What to Avoid" },
+  { id: "followup", label: "🩺 Tracking & Care" },
+];
+
+const RULES: RuleItem[] = [
   {
-    num: 1,
+    id: "r1",
+    category: "intake",
     title: "Take with a Calm, Clean Mouth",
-    desc: "Allow 15-30 minutes before or after eating. Let your mouth be free from strong tastes.",
-    icon: <Smile className="w-5 h-5" />,
+    desc: "Ensure your mouth is clean and free of strong tastes. Allow 15–30 minutes before or after meals, tea, or snacks.",
+    icon: <Utensils className="w-5 h-5 text-emerald-600" />,
+    tag: "Timing",
   },
   {
-    num: 2,
-    title: "Let the Remedy Melt Under the Tongue",
-    desc: "Do not chew, bite, or swallow the pills directly — let them dissolve naturally.",
-    icon: <Sparkles className="w-5 h-5" />,
+    id: "r2",
+    category: "intake",
+    title: "Dissolve Slowly Under the Tongue",
+    desc: "Do not chew, bite, or swallow pills directly with water. Place under the tongue and let them melt sublingually for best absorption.",
+    icon: <Sparkles className="w-5 h-5 text-amber-500" />,
+    tag: "Absorption",
   },
   {
-    num: 3,
-    title: "Handle With Care",
-    desc: "Pour the pills into the bottle cap or a clean spoon. Avoid touching them with your fingers.",
-    icon: <AlertCircle className="w-5 h-5" />,
+    id: "r3",
+    category: "storage",
+    title: "Pour into Cap — Never Touch with Fingers",
+    desc: "Pour required pills into the bottle cap or a clean dry spoon. Touching remedies with bare fingers can deactivate subtle medicinal coatings.",
+    icon: <Hand className="w-5 h-5 text-indigo-600" />,
+    tag: "Hygiene",
   },
   {
-    num: 4,
-    title: "Keep Strong Flavours Away",
-    desc: "Avoid for 30-60 minutes: Coffee, Mint, Camphor, Eucalyptus, and Strong Spices. These can interfere with the remedy's action.",
-    icon: <Coffee className="w-5 h-5" />,
+    id: "r4",
+    category: "avoid",
+    title: "Keep Strong Flavours & Aromas Away",
+    desc: "Avoid coffee, mint (including mint toothpaste), camphor, eucalyptus, raw onion, and strong spices for 30–60 mins around dose time.",
+    icon: <Coffee className="w-5 h-5 text-rose-600" />,
+    tag: "Diet Restriction",
   },
   {
-    num: 5,
-    title: "Continue Other Medicines Safely",
-    desc: "Never stop conventional medicines without medical advice.",
-    icon: <Pill className="w-5 h-5" />,
+    id: "r5",
+    category: "storage",
+    title: "Store in a Cool, Neutral Place",
+    desc: "Keep bottles tightly closed, away from direct sunlight, heat, humidity, perfumes, and electronic devices (mobile/microwaves).",
+    icon: <Home className="w-5 h-5 text-blue-600" />,
+    tag: "Storage",
   },
   {
-    num: 6,
-    title: "Store in a Peaceful Place",
-    desc: "Keep away from sunlight, heat, moisture, perfumes, and electronics. Store tightly closed.",
-    icon: <Home className="w-5 h-5" />,
+    id: "r6",
+    category: "intake",
+    title: "Maintain Gaps Between Different Remedies",
+    desc: "If Dr. Mishra has prescribed multiple remedies, leave a 15–30 minute gap between taking each one unless instructed otherwise.",
+    icon: <Timer className="w-5 h-5 text-teal-600" />,
+    tag: "Sequence",
   },
   {
-    num: 7,
-    title: "Follow Potency & Dose Exactly",
-    desc: "Do not change 30C / 200C / 1M or frequency on your own.",
-    icon: <ClipboardCheck className="w-5 h-5" />,
+    id: "r7",
+    category: "intake",
+    title: "Follow Prescribed Potency & Dose Exactly",
+    desc: "Do not alter the potency (e.g. 30C, 200C, 1M), drop count, or frequency of doses without consulting Dr. Mishra.",
+    icon: <ClipboardCheck className="w-5 h-5 text-purple-600" />,
+    tag: "Dosage",
   },
   {
-    num: 8,
-    title: "Avoid Alcohol, Smoking and Narcotics",
-    desc: "Always avoid alcohol, smoking, and narcotics.",
-    icon: <Ban className="w-5 h-5" />,
+    id: "r8",
+    category: "avoid",
+    title: "Avoid Alcohol, Smoking & Tobacco",
+    desc: "Avoid alcohol, smoking, vaping, and narcotic substances throughout active treatment, as they hinder homeopathic response.",
+    icon: <Ban className="w-5 h-5 text-red-600" />,
+    tag: "Lifestyle",
   },
   {
-    num: 9,
-    title: "Leave Gaps Between Remedies",
-    desc: "Allow 15-30 minutes between different homoeopathic doses unless advised otherwise.",
-    icon: <Timer className="w-5 h-5" />,
+    id: "r9",
+    category: "avoid",
+    title: "Continue Regular Medications Safely",
+    desc: "Never stop your conventional allopathic prescriptions (e.g. for BP, thyroid, or diabetes) without proper medical consultation.",
+    icon: <Pill className="w-5 h-5 text-sky-600" />,
+    tag: "Safety",
   },
   {
-    num: 10,
-    title: "Observe Your Body",
-    desc: "Notice improvements, changes in energy, mood, sleep, or any aggravations. Share them with your practitioner.",
-    icon: <Activity className="w-5 h-5" />,
+    id: "r10",
+    category: "followup",
+    title: "Observe & Record Your Body's Shifts",
+    desc: "Notice changes in your energy levels, sleep patterns, emotional state, and physical symptoms to discuss during your follow-up.",
+    icon: <Activity className="w-5 h-5 text-emerald-600" />,
+    tag: "Follow-up",
   },
 ];
 
 export function MedicineRulesSection() {
+  const [activeTab, setActiveTab] = useState("all");
+
+  const displayedRules =
+    activeTab === "all"
+      ? RULES
+      : RULES.filter((r) => r.category === activeTab);
+
   return (
-    <section id="guidelines" className="pt-16 pb-10 sm:pt-20 sm:pb-12 bg-secondary">
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="guidelines" className="py-10 sm:py-16 bg-background relative">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Header */}
-        <div className="text-center mb-10 sm:mb-12">
+        <div className="text-center mb-6 sm:mb-10">
           <div
-            className="text-accent mb-3 tracking-widest uppercase"
+            className="text-accent mb-2 tracking-widest uppercase"
             style={{ fontFamily: "'Inter', sans-serif", fontSize: "12px", fontWeight: 500 }}
           >
-            Patient Guidelines
+            Patient Guidelines & Best Practices
           </div>
           <h2
-            className="text-foreground mb-4"
-            style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem, 3vw, 2.6rem)", fontWeight: 700 }}
+            className="text-foreground mb-3 leading-tight"
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              fontSize: "clamp(1.9rem, 3.5vw, 2.7rem)",
+              fontWeight: 700,
+            }}
           >
             Rules for Taking <span className="text-primary italic font-normal">Homoeopathic Medicines</span>
           </h2>
           <p
-            className="text-muted-foreground max-w-xl mx-auto"
-            style={{ fontFamily: "'Inter', sans-serif", fontSize: "15px", lineHeight: 1.7 }}
+            className="text-muted-foreground max-w-xl mx-auto text-sm sm:text-base leading-relaxed"
+            style={{ fontFamily: "'Inter', sans-serif" }}
           >
-            Gentle Guidelines for Safe & Effective Healing. Follow these instructions to ensure
-            the highest efficacy of your homoeopathic remedies.
+            Homoeopathic remedies work dynamically with your vital force. Follow these 4 core principles to ensure maximum potency and swift healing.
           </p>
         </div>
 
-        {/* Grid layout */}
-        <div className="grid md:grid-cols-2 gap-6">
-          {rules.map((rule) => (
-            <div
-              key={rule.num}
-              className="bg-card rounded-2xl p-6 border border-primary/10 hover:shadow-md transition-shadow flex items-start gap-4"
+        {/* Quick Summary Cards (4 Thematic Pillars) */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4 mb-8 sm:mb-10">
+          <div className="bg-card p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-primary/10 text-center shadow-sm">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 mx-auto rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center mb-1.5 sm:mb-2 font-bold text-xs sm:text-sm">
+              1
+            </div>
+            <div className="text-foreground font-semibold text-xs sm:text-sm">Clean Mouth</div>
+            <div className="text-muted-foreground text-[10px] sm:text-[11px] mt-0.5">15-30m before/after food</div>
+          </div>
+
+          <div className="bg-card p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-primary/10 text-center shadow-sm">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 mx-auto rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center mb-1.5 sm:mb-2 font-bold text-xs sm:text-sm">
+              2
+            </div>
+            <div className="text-foreground font-semibold text-xs sm:text-sm">Melt Under Tongue</div>
+            <div className="text-muted-foreground text-[10px] sm:text-[11px] mt-0.5">Never chew or swallow</div>
+          </div>
+
+          <div className="bg-card p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-primary/10 text-center shadow-sm">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 mx-auto rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center mb-1.5 sm:mb-2 font-bold text-xs sm:text-sm">
+              3
+            </div>
+            <div className="text-foreground font-semibold text-xs sm:text-sm">Pour in Cap</div>
+            <div className="text-muted-foreground text-[10px] sm:text-[11px] mt-0.5">Don't touch with fingers</div>
+          </div>
+
+          <div className="bg-card p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-primary/10 text-center shadow-sm">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 mx-auto rounded-xl bg-rose-50 text-rose-700 flex items-center justify-center mb-1.5 sm:mb-2 font-bold text-xs sm:text-sm">
+              4
+            </div>
+            <div className="text-foreground font-semibold text-xs sm:text-sm">No Strong Flavours</div>
+            <div className="text-muted-foreground text-[10px] sm:text-[11px] mt-0.5">Avoid coffee, mint, camphor</div>
+          </div>
+        </div>
+
+        {/* Interactive Category Filter Pills */}
+        <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 mb-6 sm:mb-8">
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => setActiveTab(cat.id)}
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all cursor-pointer ${
+                activeTab === cat.id
+                  ? "bg-primary text-primary-foreground shadow-sm font-semibold scale-102"
+                  : "bg-card text-muted-foreground hover:text-foreground border border-primary/10 hover:border-primary/25"
+              }`}
             >
-              {/* Rule Number & Icon container */}
-              <div className="flex-shrink-0 flex flex-col items-center gap-1">
-                <div
-                  className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold"
-                  style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px" }}
-                >
-                  {rule.num}
-                </div>
-                <div className="text-accent mt-1">
-                  {rule.icon}
-                </div>
+              {cat.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Guidelines Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+          {displayedRules.map((rule) => (
+            <div
+              key={rule.id}
+              className="bg-card rounded-2xl p-4 sm:p-6 border border-primary/10 hover:border-primary/25 shadow-sm hover:shadow-md transition-all flex items-start gap-3 sm:gap-4 group reveal-on-scroll"
+            >
+              {/* Left Icon Block */}
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-secondary border border-primary/10 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                {rule.icon}
               </div>
 
-              {/* Text details */}
-              <div>
-                <h3
-                  className="text-foreground mb-1.5"
-                  style={{ fontFamily: "'Playfair Display', serif", fontSize: "17px", fontWeight: 600 }}
-                >
-                  {rule.title}
-                </h3>
+              {/* Text content */}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-2 mb-1">
+                  <h3
+                    className="text-foreground font-bold text-sm sm:text-lg leading-snug"
+                    style={{ fontFamily: "'Playfair Display', serif" }}
+                  >
+                    {rule.title}
+                  </h3>
+                  <span className="text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-primary/5 text-primary border border-primary/10 flex-shrink-0">
+                    {rule.tag}
+                  </span>
+                </div>
                 <p
-                  className="text-muted-foreground"
-                  style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px", lineHeight: 1.6 }}
+                  className="text-muted-foreground text-xs sm:text-sm leading-relaxed"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
                 >
                   {rule.desc}
                 </p>
@@ -140,16 +242,22 @@ export function MedicineRulesSection() {
           ))}
         </div>
 
-        {/* Note block */}
-        <div className="mt-8 bg-card/60 backdrop-blur rounded-2xl p-5 border border-accent/20 max-w-2xl mx-auto text-center">
-          <p
-            className="text-foreground"
-            style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px", fontWeight: 500 }}
-          >
-            💡 <strong className="text-accent">Important Note:</strong> Homoeopathic medicines work on energetic principles. Keep them clean, handle with care, and follow Dr. Mishra's advice closely.
-          </p>
+        {/* Doctor's Golden Rule Banner */}
+        <div className="mt-10 bg-card rounded-2xl p-6 border border-primary/15 shadow-sm flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+          <div className="w-12 h-12 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center flex-shrink-0 shadow">
+            <Sparkles className="w-6 h-6 text-amber-300" />
+          </div>
+          <div className="flex-1">
+            <div className="text-foreground font-semibold text-sm sm:text-base">
+              Dr. Mayur Mishra's Golden Principle for Patients
+            </div>
+            <p className="text-muted-foreground text-xs sm:text-sm mt-0.5">
+              Homoeopathy works on the vital force gently and naturally. Consistency in timing, proper storage away from electromagnetic waves and scents, and patience ensure the most permanent recovery.
+            </p>
+          </div>
         </div>
       </div>
     </section>
   );
 }
+
