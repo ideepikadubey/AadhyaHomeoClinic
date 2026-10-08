@@ -6,12 +6,15 @@ import { AboutSection } from "./components/AboutSection";
 import { HospitalAffiliationsSection } from "./components/HospitalAffiliationsSection";
 import { DiseasesSection } from "./components/DiseasesSection";
 import { MedicineRulesSection } from "./components/MedicineRulesSection";
+import { ProductsSection } from "./components/ProductsSection";
+import { GallerySection } from "./components/GallerySection";
 import { GoogleReviewsSection } from "./components/GoogleReviewsSection";
 import { InstagramSection } from "./components/InstagramSection";
 import { FaqSection } from "./components/FaqSection";
 import { QueryForm } from "./components/QueryForm";
 import { Footer } from "./components/Footer";
 import { ConsultationModal } from "./components/ConsultationModal";
+import { ScrollToTop } from "./components/ScrollToTop";
 import whatsappIcon from "@/assets/whatsapp.png";
 
 export default function App() {
@@ -43,28 +46,31 @@ export default function App() {
   return (
     /* MARKER-MAKE-KIT-INVOKED */
     <div
-      className="min-h-screen relative"
+      className="min-h-screen relative overflow-x-hidden"
       style={{ fontFamily: "'Inter', sans-serif" }}
     >
       <Navbar onOpenConsultation={openModal} />
       <HeroSection onOpenConsultation={openModal} />
       <AboutSection />
       <HospitalAffiliationsSection />
+      <ProductsSection />
       <DiseasesSection />
       <MedicineRulesSection />
+      <GallerySection />
       <GoogleReviewsSection />
       <InstagramSection />
       <FaqSection />
       <QueryForm />
       <Footer onOpenConsultation={openModal} />
       <ConsultationModal isOpen={modalOpen} onClose={closeModal} />
+      <ScrollToTop />
 
       {/* Floating WhatsApp Action Button with Hover Label */}
       <a
         href="https://wa.me/917572946732?text=Hello%20Dr.%20Mishra,%20I%20would%20like%20to%20inquire%20about%20a%20consultation."
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 flex items-center group cursor-pointer"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex items-center group cursor-pointer"
         aria-label="Inquire on WhatsApp"
       >
         {/* Floating Hover Badge */}
@@ -76,7 +82,7 @@ export default function App() {
         </span>
 
         {/* WhatsApp Icon */}
-        <div className="w-14 h-14 rounded-full shadow-2xl group-hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center">
+        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full shadow-2xl group-hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center">
           <img
             src={whatsappIcon}
             alt="Inquire on WhatsApp"

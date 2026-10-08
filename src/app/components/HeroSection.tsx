@@ -41,7 +41,7 @@ export function HeroSection({ onOpenConsultation }: HeroSectionProps) {
           style={{ fontFamily: "'Inter', sans-serif", fontSize: "12px", fontWeight: 500 }}
         >
           <Sparkles className="w-3.5 h-3.5 text-amber-300 fill-amber-300 animate-pulse" />
-          <span>Natural Healing · Classical Homoeopathy</span>
+          <span>Best Homeopathy Clinic in Ahmedabad · Classical Homoeopathy</span>
         </div>
 
         {/* Headline */}
@@ -54,7 +54,7 @@ export function HeroSection({ onOpenConsultation }: HeroSectionProps) {
           }}
         >
           Healing with Harmony<br />
-          <span className="text-emerald-300 italic font-normal">Gentle, Effective & Natural</span>
+          <span className="text-emerald-300 italic font-normal">Gentle, Effective & Classical Homeopathy</span>
         </h1>
 
         {/* Subtitle */}
@@ -62,17 +62,18 @@ export function HeroSection({ onOpenConsultation }: HeroSectionProps) {
           className="text-white/85 mb-3 sm:mb-4 max-w-2xl text-xs sm:text-base md:text-lg leading-relaxed animate-fade-in delay-200 drop-shadow-xs px-2"
           style={{ fontFamily: "'Inter', sans-serif" }}
         >
-          Welcome to <strong className="text-white font-semibold">Aadhya Homoeo Clinic</strong>, where{" "}
+          Welcome to <strong className="text-white font-semibold">Aadhya Homoeo Clinic</strong> — premier destination for the{" "}
+          <strong className="text-white font-semibold">best homeopathy treatment in Ahmedabad</strong>, where{" "}
           <strong className="text-white font-semibold">
-            Dr. Mayur N. Mishra (B.H.M.S.)
+            Dr. Mayur N. Mishra (B.H.M.S., CCRH Awardee)
           </strong>{" "}
-          brings the gentle power of classical homoeopathy to treat chronic diseases, respiratory, skin, and pediatric ailments at the root.
+          applies classical homoeopathy to cure chronic diseases, skin disorders, hair fall, allergies, PCOD, and pediatric ailments at their root.
         </p>
 
         {/* Doctor Registration */}
         <div className="flex items-center justify-center gap-2 text-xs sm:text-sm font-medium text-white/75 mb-4 sm:mb-6 animate-fade-in delay-200">
           <ShieldCheck className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-          <span>Registered Physician · Reg. No.: <strong className="text-white font-semibold">G-32424</strong></span>
+          <span>Certified Homeopathic Physician · Reg. No.: <strong className="text-white font-semibold">G-32424</strong></span>
         </div>
 
         {/* Action Button */}

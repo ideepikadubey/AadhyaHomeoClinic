@@ -11,6 +11,8 @@ export function Footer({ onOpenConsultation }: FooterProps) {
     { label: "About Dr. Mishra", href: "#about" },
     { label: "Hospital Affiliations", href: "#affiliations" },
     { label: "Diseases Treated", href: "#diseases" },
+    { label: "Products & Remedies", href: "#products" },
+    { label: "Clinic Gallery", href: "#gallery" },
     { label: "Patient Guidelines", href: "#guidelines" },
     { label: "FAQs", href: "#faqs" },
     { label: "Instagram Updates", href: "#updates" },
@@ -94,8 +96,7 @@ export function Footer({ onOpenConsultation }: FooterProps) {
             className="text-white/65 mb-5 text-xs sm:text-sm leading-relaxed"
             style={{ fontFamily: "'Inter', sans-serif" }}
           >
-            Providing compassionate, evidence-based homoeopathic care. Your journey to natural
-            health starts here.
+            Ahmedabad's leading classical homeopathy clinic providing gentle, root-cause healing for chronic diseases, skin, hair loss, and wellness.
           </p>
           <div className="flex gap-3">
             <a

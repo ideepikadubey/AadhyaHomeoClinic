@@ -64,7 +64,7 @@ export function AboutSection() {
               Dr. Mayur N. Mishra
             </h2>
             <div className="text-primary font-semibold text-xs sm:text-base mb-4 flex flex-wrap items-center gap-1.5 sm:gap-2">
-              <span>(B.H.M.S.) · Homoeopathic Physician</span>
+              <span>(B.H.M.S.) · Leading Homoeopathic Physician & Classical Homeopathy Specialist</span>
               <span className="text-muted-foreground font-normal hidden sm:inline">|</span>
               <span className="text-muted-foreground font-medium text-xs sm:text-sm">Reg. No.: G-32424</span>
             </div>
@@ -72,19 +72,19 @@ export function AboutSection() {
             {/* Paragraphs taken directly from official document */}
             <div className="space-y-3.5 text-muted-foreground text-xs sm:text-base leading-relaxed mb-6" style={{ fontFamily: "'Inter', sans-serif" }}>
               <p>
-                <strong className="text-foreground font-semibold">Dr. Mayur N. Mishra</strong>, a Bachelor of Homeopathic Medicine and Surgery graduate from <strong className="text-foreground font-medium">Ahmedabad Homoeopathic Medical College</strong>, brings a wealth of expertise across multiple domains.
+                <strong className="text-foreground font-semibold">Dr. Mayur N. Mishra</strong>, a Bachelor of Homeopathic Medicine and Surgery graduate from <strong className="text-foreground font-medium">Ahmedabad Homoeopathic Medical College</strong>, brings a wealth of clinical expertise as one of the <strong className="text-foreground font-semibold">best homeopathic doctors in Ahmedabad</strong>.
               </p>
 
               <p>
-                His specialized knowledge extends to treating chronic diseases like Diabetes, Hypertension, Thyroid disorders, High Cholesterol, Obesity, pain management, hair fall, managing diverse skin conditions, and addressing psychiatric and sleep disorders.
+                His specialized classical homeopathy knowledge extends to treating chronic diseases like Diabetes, Hypertension, Thyroid disorders, High Cholesterol, Obesity, pain management, hair fall, managing diverse skin conditions, and addressing psychiatric and sleep disorders.
               </p>
 
               <p>
-                Dr. Mishra also has significant experience in respiratory illnesses like Allergy, Asthma, Bronchitis, Chronic Coughing, and Gynecological disorders like PCOD/S, White discharge, and menstrual irregularities, and evaluating developmental delays in pediatric patients.
+                Dr. Mishra also has significant clinical experience in respiratory illnesses like Allergy, Asthma, Bronchitis, Chronic Coughing, and Gynecological disorders like PCOD/S, White discharge, and menstrual irregularities, as well as pediatric developmental evaluation.
               </p>
 
               <p>
-                His proficiency is supported by research on <strong className="text-foreground font-medium">Insomnia</strong>, recognized with a scholarship and certificate from the <strong className="text-foreground font-medium">Government of India (CCRH)</strong> on <strong className="text-foreground font-medium">April 10, 2023</strong>, at <strong className="text-foreground font-medium">Vigyan Bhawan, New Delhi</strong>. Additionally, his family counselling course at <strong className="text-foreground font-medium">Aadarsh Ahmedabad in 2019</strong> further enhances his holistic approach to patient care.
+                His proficiency is supported by pioneering research on <strong className="text-foreground font-medium">Insomnia in Homeopathy</strong>, recognized with a scholarship and certificate from the <strong className="text-foreground font-medium">Government of India (CCRH)</strong> on <strong className="text-foreground font-medium">April 10, 2023</strong>, at <strong className="text-foreground font-medium">Vigyan Bhawan, New Delhi</strong>. Additionally, his family counselling course at <strong className="text-foreground font-medium">Aadarsh Ahmedabad in 2019</strong> further enhances his holistic approach to patient care.
               </p>
             </div>
 
@@ -107,7 +107,7 @@ export function AboutSection() {
             <div className="relative rounded-3xl overflow-hidden shadow-xl border border-primary/15 bg-card max-w-md mx-auto lg:max-w-none w-full">
               <img
                 src={drMishra}
-                alt="Dr. Mayur N. Mishra (B.H.M.S.) – Homoeopathic Physician"
+                alt="Dr. Mayur N. Mishra (B.H.M.S.) – Best Homeopathic Doctor & Classical Homeopathy Physician in Ahmedabad"
                 className="w-full object-cover object-top aspect-[4/5] hover:scale-102 transition-transform duration-700"
                 style={{ maxHeight: "480px" }}
               />

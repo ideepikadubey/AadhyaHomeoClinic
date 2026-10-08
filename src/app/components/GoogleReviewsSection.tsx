@@ -11,69 +11,72 @@ interface GoogleReviewItem {
   badge: string;
   treatment: string;
   reviewText: string;
+  ownerResponse?: string;
 }
 
-// 5 Authentic patient reviews reflecting real patient experiences at Aadhya Homoeo Clinic
+// Authentic patient reviews from Dr. Mayur N. Mishra's Google Business Profile
 const DEFAULT_GMB_REVIEWS: GoogleReviewItem[] = [
   {
     id: "rev-1",
-    authorName: "Priyanshi Patel",
+    authorName: "Vaishnav Darshan",
     avatarColor: "bg-blue-600",
-    initials: "PP",
+    initials: "VD",
     rating: 5,
-    timeAgo: "2 weeks ago",
-    badge: "Local Guide · 14 reviews",
-    treatment: "Chronic Acidity & IBS",
+    timeAgo: "a month ago",
+    badge: "5 reviews",
+    treatment: "Effective Care & Treatment",
     reviewText:
-      "I was suffering from severe acidity, bloating, and indigestion for over 2 years. After taking Dr. Mayur Mishra's homoeopathic treatment for just 2 months, I feel completely relieved without any side effects. Dr. Mishra explains the root cause so patiently. Highly recommended!",
+      "I had an excellent experience at Aadhya Homeo Clinic. The doctor is highly knowledgeable, patient, and takes the time to understand every concern before suggesting the treatment. The care and treatment provided are truly effective.",
   },
   {
     id: "rev-2",
-    authorName: "Rajesh Solanki",
-    avatarColor: "bg-emerald-600",
-    initials: "RS",
+    authorName: "Gyaneshwari Shastri",
+    avatarColor: "bg-sky-600",
+    initials: "Gy",
     rating: 5,
-    timeAgo: "1 month ago",
-    badge: "Verified Patient",
-    treatment: "Skin Allergy & Eczema",
+    timeAgo: "a month ago",
+    badge: "3 reviews",
+    treatment: "Accurate Diagnosis & Counselling",
     reviewText:
-      "Best homoeopathic doctor in Ahmedabad! My skin allergies and recurring rashes were treated with remarkable precision. Dr. Mishra is very polite and gives genuine time to understand the patient's full medical history. Truly grateful for his care.",
+      "Dr. Mayur Mishra is a brilliant doctor with very accurate diagnosis and his treatment works wonders. His counselling also helps a lot in our routine life and shows a very high significance. He is very polite and humble. He treats kids very well.",
+    ownerResponse:
+      "Thank you for sharing your experience. We're glad our homeopathic treatment could support your health journey. Take care and stay well!",
   },
   {
     id: "rev-3",
-    authorName: "Bhavna Rathod",
-    avatarColor: "bg-purple-600",
-    initials: "BR",
+    authorName: "Smit Purani",
+    avatarColor: "bg-amber-600",
+    initials: "SP",
     rating: 5,
-    timeAgo: "1 month ago",
-    badge: "Local Guide · 8 reviews",
-    treatment: "PCOD & Hormonal Balance",
+    timeAgo: "a month ago",
+    badge: "4 reviews · 1 photo",
+    treatment: "Stubborn Viral & Throat Relief",
     reviewText:
-      "Consulted Dr. Mishra for irregular cycles and PCOD. The results were amazing within 3 months of natural treatment. Homoeopathy worked wonders for my hormonal balance without heavy allopathic medicines. Very clean clinic and prompt guidance!",
+      "Dr. Mayur is an amazing doctor! He recently treated me for a stubborn viral infection that affected my throat after traveling internationally. Thanks to his precise medicine, I recovered completely in just one week. If you are looking for genuine care and fast results, Aadhya Homeo Clinic is the place to go!",
   },
   {
     id: "rev-4",
-    authorName: "Amit Trivedi",
-    avatarColor: "bg-amber-600",
-    initials: "AT",
+    authorName: "Soni Ayush",
+    avatarColor: "bg-stone-700",
+    initials: "SA",
     rating: 5,
-    timeAgo: "2 months ago",
-    badge: "Verified Patient",
-    treatment: "Chronic Sinusitis & Migraine",
+    timeAgo: "a month ago",
+    badge: "3 reviews · 1 photo",
+    treatment: "Exceptional & Reassuring Care",
     reviewText:
-      "Dr. Mayur Mishra is an exceptional physician. I had severe chronic sinus headaches every season change. His individualized remedies brought lasting relief. The follow-up care, personalized diet guidelines, and attention to detail were very helpful.",
+      "Exceptional care from start to finish. The doctor was attentive, compassionate, and professional. He explained the treatment plan in a simple and reassuring way, and I experienced noticeable improvement. Thank you for the excellent care. I highly recommend this doctor.",
   },
   {
     id: "rev-5",
-    authorName: "Neha Sharma",
-    avatarColor: "bg-rose-600",
-    initials: "NS",
+    authorName: "Bhavesh Mandvekar",
+    avatarColor: "bg-emerald-600",
+    initials: "BM",
     rating: 5,
-    timeAgo: "3 months ago",
-    badge: "Verified Patient",
-    treatment: "Child Immunity & Recurring Cold",
+    timeAgo: "a month ago",
+    badge: "4 reviews",
+    treatment: "Compassionate Homoeopathy",
     reviewText:
-      "I visited for my 5-year-old child who frequently caught colds and coughs. The sweet homoeopathic pills were easy for my child to take, and their immunity has improved significantly. Aadhya Clinic is our family's trusted first choice now.",
+      "I highly recommend Dr Mayur Mishra for anyone looking for compassionate and effective homeopathic treatment. He is not only an excellent doctor but also a genuinely kind, humble, and caring person who listens to every patient with patience.",
   },
 ];
 
@@ -380,11 +383,24 @@ export function GoogleReviewsSection() {
 
                 {/* Review Text */}
                 <p
-                  className="text-muted-foreground text-sm leading-relaxed mb-4"
+                  className="text-muted-foreground text-sm leading-relaxed mb-3"
                   style={{ fontFamily: "'Inter', sans-serif" }}
                 >
                   "{rev.reviewText}"
                 </p>
+
+                {/* Response from Owner (if available) */}
+                {rev.ownerResponse && (
+                  <div className="mb-4 p-3 rounded-xl bg-secondary/80 border border-primary/10 text-xs">
+                    <div className="flex items-center gap-1.5 font-semibold text-foreground mb-1">
+                      <span className="text-primary font-bold">Response from the owner</span>
+                      <span className="text-muted-foreground text-[10px]">• {rev.timeAgo}</span>
+                    </div>
+                    <p className="text-muted-foreground leading-relaxed italic">
+                      "{rev.ownerResponse}"
+                    </p>
+                  </div>
+                )}
               </div>
 
               {/* Bottom Verified Badge */}
