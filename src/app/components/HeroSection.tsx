@@ -67,7 +67,7 @@ export function HeroSection({ onOpenConsultation }: HeroSectionProps) {
           <strong className="text-white font-semibold">
             Dr. Mayur N. Mishra (B.H.M.S., CCRH Awardee)
           </strong>{" "}
-          applies classical homoeopathy to cure chronic diseases, skin disorders, hair fall, allergies, PCOD, and pediatric ailments at their root.
+          applies classical homoeopathy to treat chronic diseases, skin disorders, hair fall, allergies, PCOD, and pediatric ailments at their root.
         </p>
 
         {/* Doctor Registration */}
